@@ -1,25 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Countdown: MonoBehaviour {
-    public int timeRemaining;
+public class Countdown : MonoBehaviour
+{
+    public float timeRemaining;
     public bool isCountingDown = false;
 
-    public void of(int duration)
+    private readonly float tickTime = 0.1f;
+
+    public void wait(float duration)
     {
-        if (!isCountingDown) {
+        if (!isCountingDown)
+        {
             isCountingDown = true;
             timeRemaining = duration;
-            Invoke ( "_tick", 1f );
+            Invoke("_tick", tickTime);
         }
     }
- 
-    private void _tick() {
-        timeRemaining--;
-        if(timeRemaining > 0) {
-            Invoke ( "_tick", 1f );
-        } else {
+
+    private void _tick()
+    {
+        timeRemaining -= tickTime;
+        if (timeRemaining > 0)
+        {
+            Invoke("_tick", tickTime);
+        }
+        else
+        {
             isCountingDown = false;
         }
     }

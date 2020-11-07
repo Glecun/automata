@@ -18,7 +18,7 @@ public class TreeController : MonoBehaviour, IHarvestable
     private StateEnum currentState;
     private Countdown countdown;
     private SpriteRenderer spriteRenderer;
-    private const int durationOfGrowing = 3;
+    private const float durationOfGrowing = 3f;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class TreeController : MonoBehaviour, IHarvestable
         if (currentState == StateEnum.CUT)
         {
             currentState = StateEnum.GROWING;
-            countdown.of(durationOfGrowing);
+            countdown.wait(durationOfGrowing);
         }
 
         if (hasFinishedGrowing())

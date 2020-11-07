@@ -11,4 +11,9 @@ public class HumanDecisionController
     {
         currentDecision = Decision.WAITING;
     }
+
+    public void updateDecision()
+    {
+        currentDecision = Decision.WAITING;
+    }
 }
