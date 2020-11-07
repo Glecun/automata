@@ -15,5 +15,11 @@ public class LevelController : MonoBehaviour
         InstantiateUtils.Instantiate(prefabList.get("Tree"), new Vector3(20,4), Quaternion.identity, transform);
         InstantiateUtils.Instantiate(prefabList.get("Tree"), new Vector3(20,5), Quaternion.identity, transform);
         InstantiateUtils.Instantiate(prefabList.get("Tree"), new Vector3(19,4), Quaternion.identity, transform);
+
+        //TownHall
+        InstantiateUtils.Instantiate(prefabList.get("TownHall"), new Vector3(8, 2), Quaternion.identity, transform);
+
+        //Human
+        InstantiateUtils.Instantiate(prefabList.get("Human"), new Vector3(9, 1), Quaternion.identity, transform);
     }
 }

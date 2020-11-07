@@ -197,14 +197,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1090768564, guid: ace0f02f320112e4a8f5fbd223d6f403, type: 3}
-      propertyPath: numberOfCellInLine
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090768564, guid: ace0f02f320112e4a8f5fbd223d6f403, type: 3}
-      propertyPath: numberOfCellInColumn
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 8516239008645364694, guid: ace0f02f320112e4a8f5fbd223d6f403,
         type: 3}
       propertyPath: m_LocalPosition.x
