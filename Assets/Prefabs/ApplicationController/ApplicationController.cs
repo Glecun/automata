@@ -11,7 +11,9 @@ public class ApplicationController : MonoBehaviour
         //Avoid duplicates
         if (FindObjectsOfType(GetType()).Length > 1) { Destroy(gameObject); }
 
-        InstantiateUtils.Instantiate(PrefabList.getPrefab("GameSceneController"));
+        var prefabList = gameObject.GetComponent<PrefabList>();
+
+        InstantiateUtils.Instantiate(prefabList.get("GameSceneController"));
     }
 
 }

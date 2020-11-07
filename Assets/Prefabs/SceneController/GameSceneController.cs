@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class GameSceneController : MonoBehaviour
 {
-    [SerializeField]
     public GridScript grid;
 
     private void Awake()
     {
-        grid = new GridScript(16, 22, 14);
-        InstantiateUtils.Instantiate(PrefabList.getPrefab("LevelController"), transform);
+        var prefabList = GameObject.Find("ApplicationController").GetComponent<PrefabList>();
+        var settings = GameObject.Find("ApplicationController").GetComponent<Settings>();
+
+        grid = new GridScript(settings.cellSize, settings.numberOfCellInLine, settings.numberOfCellInColumn);
+        InstantiateUtils.Instantiate(prefabList.get("LevelController"), transform);
     }
 }

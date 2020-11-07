@@ -9,6 +9,6 @@ public class MainCameraController : MonoBehaviour
         float aspectRatio = Camera.main.aspect; //(width divided by height)
         float camSize = Camera.main.orthographicSize; //The size value mentioned earlier
         float correctPositionX = aspectRatio * camSize;
-        Camera.main.transform.position = new Vector3(correctPositionX, camSize, 0);
+        Camera.main.transform.position = new Vector3(correctPositionX, camSize, -10);
     }
 }

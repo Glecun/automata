@@ -6,7 +6,6 @@ public class InstantiateUtils : MonoBehaviour
 {
     public static GameObject Instantiate(GameObject gameObject)
     {
-        Debug.Log("lol");
         var gameObjectCreated = UnityEngine.Object.Instantiate(gameObject);
         return setName(gameObjectCreated, gameObject);
     }
