@@ -1,23 +1,20 @@
 ﻿using UnityEngine;
 using Random = System.Random;
 
-internal enum StateEnum 
+internal enum StateEnum
 {
     CUT,
     GROWING,
     FULL
 }
 
-public class TreeController : MonoBehaviour , IHarvestable
+public class TreeController : MonoBehaviour, IHarvestable
 {
-
     public ResourceAmount resourceAmount;
 
-    [SerializeField]
-    private Sprite tree_cut;
-    [SerializeField]
-    private Sprite[] treeList;
-    private Sprite intialSprite;
+    [SerializeField] private Sprite tree_cut = null;
+    [SerializeField] private Sprite[] treeList = null;
+    private Sprite initialSprite;
     private StateEnum currentState;
     private Countdown countdown;
     private SpriteRenderer spriteRenderer;
@@ -25,15 +22,15 @@ public class TreeController : MonoBehaviour , IHarvestable
 
     private void Awake()
     {
-        intialSprite = getRandomTreeSprite();
-        
+        initialSprite = getRandomTreeSprite();
+
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = intialSprite;
-        
+        spriteRenderer.sprite = initialSprite;
+
         currentState = StateEnum.FULL;
-        
+
         countdown = gameObject.AddComponent<Countdown>();
-        
+
         resourceAmount = new ResourceAmount(10, ResourceEnum.WOOD);
     }
 
@@ -45,7 +42,7 @@ public class TreeController : MonoBehaviour , IHarvestable
         GetComponent<SpriteRenderer>().sprite = tree_cut;
         return resourceAmountToRetrieve;
     }
-    
+
     private void Update()
     {
         if (currentState == StateEnum.CUT)
@@ -57,7 +54,7 @@ public class TreeController : MonoBehaviour , IHarvestable
         if (hasFinishedGrowing())
         {
             currentState = StateEnum.FULL;
-            spriteRenderer.sprite = intialSprite;
+            spriteRenderer.sprite = initialSprite;
         }
     }
 
@@ -65,7 +62,7 @@ public class TreeController : MonoBehaviour , IHarvestable
     {
         return currentState == StateEnum.GROWING && !countdown.isCountingDown;
     }
-    
+
     private Sprite getRandomTreeSprite()
     {
         var rnd = new Random();
