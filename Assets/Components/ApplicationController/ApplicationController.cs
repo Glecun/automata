@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ApplicationController : MonoBehaviour
 {
+    [SerializeField] private GameObject gameSceneController = null;
+
     void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
         //Avoid duplicates
-        if (FindObjectsOfType(GetType()).Length > 1) { Destroy(gameObject); }
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(gameObject);
+        }
 
-        var prefabList = gameObject.GetComponent<PrefabList>();
-
-        InstantiateUtils.Instantiate(prefabList.get("GameSceneController"));
+        InstantiateUtils.Instantiate(gameSceneController);
     }
-
 }

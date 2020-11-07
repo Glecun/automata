@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8516239008645364694}
   - component: {fileID: 9150176033074114110}
-  - component: {fileID: 1090768565}
   - component: {fileID: 1090768564}
   m_Layer: 0
   m_Name: ApplicationController
@@ -45,31 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a735657f27f640147b8f8189eb63ce26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1090768565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516239008645364697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 128a8901038ae98449174af41cf3a4a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabList:
-  - {fileID: 5202690807265574947, guid: 022360b672913b84f99e2d993c56bc00, type: 3}
-  - {fileID: 5372396990038599157, guid: 074534c01223afb41bd3543700387c35, type: 3}
-  - {fileID: 8585146516098951333, guid: 1bbeb973facae8e47ab7ff31929295f4, type: 3}
-  - {fileID: 4616238796501717808, guid: 83bcd25f31e550945898e235967c09ed, type: 3}
-  - {fileID: 8151751804312085520, guid: d3a9e761ac3789041a88b77e7b89cb0c, type: 3}
-  - {fileID: 6310783016713924002, guid: fbb7d0287aaa84345829895738498763, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  gameSceneController: {fileID: 5202690807265574947, guid: 022360b672913b84f99e2d993c56bc00,
+    type: 3}
 --- !u!114 &1090768564
 MonoBehaviour:
   m_ObjectHideFlags: 0

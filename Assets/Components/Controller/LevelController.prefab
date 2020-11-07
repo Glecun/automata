@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28056016b210b644e9891636b851b009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundGrid: {fileID: 8585146516098951333, guid: 1bbeb973facae8e47ab7ff31929295f4,
+    type: 3}
+  tree: {fileID: 4616238796501717808, guid: 83bcd25f31e550945898e235967c09ed, type: 3}
+  human: {fileID: 6310783016713924002, guid: fbb7d0287aaa84345829895738498763, type: 3}
+  townHall: {fileID: 8151751804312085520, guid: d3a9e761ac3789041a88b77e7b89cb0c,
+    type: 3}
