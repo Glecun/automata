@@ -4,9 +4,9 @@ using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class GridScript {
-    private readonly int cellSize;
-    private readonly int x;
-    private readonly int y;
+    public readonly int cellSize;
+    public readonly int x;
+    public readonly int y;
 
     public GridScript(int cellSize, int x, int y)
     {

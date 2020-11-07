@@ -5,15 +5,13 @@ using UnityEngine;
 
 public class ApplicationController : MonoBehaviour
 {
-    public GameSceneController gameSceneController;
-
     void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
         //Avoid duplicates
         if (FindObjectsOfType(GetType()).Length > 1) { Destroy(gameObject); }
 
-        Instantiate(gameSceneController);
+        InstantiateUtils.Instantiate(PrefabList.getPrefab("GameSceneController"));
     }
 
 }

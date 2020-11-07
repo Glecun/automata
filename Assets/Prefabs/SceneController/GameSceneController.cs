@@ -10,7 +10,7 @@ public class GameSceneController : MonoBehaviour
 
     private void Awake()
     {
-        grid = new GridScript(16, 40, 40);
-        Instantiate(PrefabList.getPrefab("LevelController"), transform);
+        grid = new GridScript(16, 22, 14);
+        InstantiateUtils.Instantiate(PrefabList.getPrefab("LevelController"), transform);
     }
 }
