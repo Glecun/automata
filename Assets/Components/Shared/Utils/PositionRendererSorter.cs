@@ -14,8 +14,7 @@ using UnityEngine;
 
 public class PositionRendererSorter : MonoBehaviour
 {
-    [SerializeField]
-    private int
+    [SerializeField] private int
         sortingOrderBase = 5000; // This number should be higher than what any of your sprites will be on the position.y
 
     [SerializeField] private int offset = 0;

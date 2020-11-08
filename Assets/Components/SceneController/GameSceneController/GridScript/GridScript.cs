@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GridScript {
+public class GridScript
+{
     public readonly int cellSize;
     public readonly int x;
     public readonly int y;
@@ -15,9 +13,20 @@ public class GridScript {
         this.y = y;
     }
 
-    public int GetCellSize() { return cellSize; }
-    public int GetX() { return x; }
-    public int GetY() { return y; }
+    public int GetCellSize()
+    {
+        return cellSize;
+    }
+
+    public int GetX()
+    {
+        return x;
+    }
+
+    public int GetY()
+    {
+        return y;
+    }
 
     public Vector3 GetWorldPosition(int x, int y)
     {
@@ -28,5 +37,10 @@ public class GridScript {
     {
         x = Mathf.FloorToInt(worldPosition.x / cellSize);
         y = Mathf.FloorToInt(worldPosition.y / cellSize);
+    }
+
+    public Pathfinding generatePathfinding()
+    {
+        return new Pathfinding(x, y, cellSize);
     }
 }

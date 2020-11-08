@@ -13,7 +13,7 @@ public class Utils
 
     public static int random(int min, int max)
     {
-        var random = new Random();
-        return random.Next(min, max);
+        var random = new Random(System.DateTime.Now.Millisecond);
+        return random.Next(min, max + 1);
     }
 }
