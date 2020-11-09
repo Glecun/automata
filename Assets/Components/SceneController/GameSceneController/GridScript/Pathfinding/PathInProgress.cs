@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class PathInProgress
     public int currentPathIndex;
     public List<Vector3> pathVectorList;
 
+    public static readonly PathInProgress NOT_MOVING = new PathInProgress(0, null);
 
     private PathInProgress(int currentPathIndex, List<Vector3> pathVectorList)
     {
@@ -24,7 +26,6 @@ public class PathInProgress
         }
 
         return new PathInProgress(0, pathVectorList);
-        ;
     }
 
     public Vector3 changePosition(Vector3 currentPosition, float speed)
@@ -33,10 +34,10 @@ public class PathInProgress
         if (pathVectorList != null)
         {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
-            if (Vector3.Distance(currentPosition, targetPosition) > 0.001f)
+            if (Vector3.Distance(currentPosition, targetPosition) > 0.01f)
             {
                 Vector3 moveDir = (targetPosition - currentPosition).normalized;
-                newPosition = currentPosition + moveDir * speed * Time.deltaTime;
+                newPosition = currentPosition + moveDir * (speed * Time.deltaTime);
             }
             else
             {
@@ -54,5 +55,10 @@ public class PathInProgress
     private void StopMoving()
     {
         pathVectorList = null;
+    }
+
+    public Boolean isMoving()
+    {
+        return pathVectorList != null;
     }
 }

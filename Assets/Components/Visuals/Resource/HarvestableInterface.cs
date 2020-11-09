@@ -1,5 +1,4 @@
-﻿
-public class ResourceAmount
+﻿public class ResourceAmount
 {
     public int amount;
     public ResourceEnum resourceEnum;

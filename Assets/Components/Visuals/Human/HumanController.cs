@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 using static Utils;
 
 public class HumanController : MonoBehaviour
@@ -9,12 +10,20 @@ public class HumanController : MonoBehaviour
     private Countdown betweenEachDecisionMaking;
     private const float durationBetweenEachDecisionMaking = 1f;
 
+    private GameSceneController gameSceneController;
+    public float speed = 7f;
+
     private void Awake()
     {
         humanDecisionController = new HumanDecisionController();
         humanActionController = new HumanActionController(gameObject);
 
         betweenEachDecisionMaking = gameObject.AddComponent<Countdown>();
+    }
+
+    private void Start()
+    {
+        gameSceneController = GameObject.Find("GameSceneController").GetComponent<GameSceneController>();
     }
 
     private void Update()
@@ -26,5 +35,17 @@ public class HumanController : MonoBehaviour
     {
         humanDecisionController.updateDecision();
         humanActionController.doAction(humanDecisionController.currentDecision);
+    }
+
+    public PathInProgress goTo(int2 end)
+    {
+        var start = getPosition();
+        return gameSceneController.grid.calculatePath(start, end);
+    }
+
+    public int2 getPosition()
+    {
+        var position = gameObject.transform.position;
+        return new int2((int) position.x, (int) position.y);
     }
 }

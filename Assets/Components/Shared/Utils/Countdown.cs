@@ -4,6 +4,8 @@ public class Countdown : MonoBehaviour
 {
     public float timeRemaining;
     public bool isCountingDown = false;
+    public bool isAcknowledged = true;
+
 
     private readonly float tickTime = 0.1f;
 
@@ -11,6 +13,7 @@ public class Countdown : MonoBehaviour
     {
         if (!isCountingDown)
         {
+            isAcknowledged = false;
             isCountingDown = true;
             timeRemaining = duration;
             Invoke("_tick", tickTime);
@@ -28,5 +31,10 @@ public class Countdown : MonoBehaviour
         {
             isCountingDown = false;
         }
+    }
+
+    public void acknowlege()
+    {
+        this.isAcknowledged = true;
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 
 public class GridScript
 {
@@ -39,8 +40,9 @@ public class GridScript
         y = Mathf.FloorToInt(worldPosition.y / cellSize);
     }
 
-    public Pathfinding generatePathfinding()
+    public PathInProgress calculatePath(int2 start, int2 end)
     {
-        return new Pathfinding(x, y, cellSize);
+        var pathfinding = new Pathfinding(x, y, cellSize);
+        return PathInProgress.setPath(start, end, pathfinding);
     }
 }
