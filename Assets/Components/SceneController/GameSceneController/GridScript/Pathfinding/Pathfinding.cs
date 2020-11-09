@@ -11,6 +11,7 @@
  */
 
 using System.Collections.Generic;
+using ModestTree;
 using UnityEngine;
 
 public class Pathfinding
@@ -22,10 +23,15 @@ public class Pathfinding
     private List<PathNode> openList;
     private List<PathNode> closedList;
 
-    public Pathfinding(int width, int height, float cellSize)
+    public Pathfinding(int width, int height, float cellSize, List<GridSquare>[,] gridSquares)
     {
-        grid = new GridPathfinding<PathNode>(width, height, cellSize, Vector3.zero,
-            (GridPathfinding<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        PathNode CreatePathNode(GridPathfinding<PathNode> g, int x, int y, List<GridSquare>[,] grids)
+        {
+            var isWalkable = grids[x, y].IsEmpty() || !grids[x, y].Exists(square => !square.isWalkable);
+            return new PathNode(g, x, y, isWalkable);
+        }
+
+        grid = new GridPathfinding<PathNode>(width, height, cellSize, Vector3.zero, gridSquares, CreatePathNode);
     }
 
     public List<Vector3> FindPath(int startX, int startY, int endX, int endY)

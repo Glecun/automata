@@ -23,12 +23,12 @@ public class PathNode
     public bool isWalkable;
     public PathNode cameFromNode;
 
-    public PathNode(GridPathfinding<PathNode> grid, int x, int y)
+    public PathNode(GridPathfinding<PathNode> grid, int x, int y, bool isWalkable)
     {
         this.grid = grid;
         this.x = x;
         this.y = y;
-        isWalkable = true;
+        this.isWalkable = isWalkable;
     }
 
     public void CalculateFCost()

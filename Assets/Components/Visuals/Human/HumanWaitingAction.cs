@@ -32,8 +32,10 @@ public class HumanWaitingAction : MonoBehaviour
 
     private void setRandomTargetPositionNearby()
     {
-        var end = new int2(humanController.getPosition().x + random(-1, 1),
-            humanController.getPosition().y + random(-1, 1));
+        var end = new int2(
+            humanController.getPosition().x + random(-1, 1),
+            humanController.getPosition().y + random(-1, 1)
+        );
         pathInProgress = humanController.goTo(end);
     }
 

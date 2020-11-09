@@ -11,6 +11,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GridPathfinding<TGridObject>
@@ -30,7 +31,8 @@ public class GridPathfinding<TGridObject>
     private TGridObject[,] gridArray;
 
     public GridPathfinding(int width, int height, float cellSize, Vector3 originPosition,
-        Func<GridPathfinding<TGridObject>, int, int, TGridObject> createGridObject)
+        List<GridSquare>[,] gridSquares,
+        Func<GridPathfinding<TGridObject>, int, int, List<GridSquare>[,], TGridObject> createGridObject)
     {
         this.width = width;
         this.height = height;
@@ -43,7 +45,7 @@ public class GridPathfinding<TGridObject>
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                gridArray[x, y] = createGridObject(this, x, y);
+                gridArray[x, y] = createGridObject(this, x, y, gridSquares);
             }
         }
     }

@@ -11,8 +11,8 @@ public class BackgroundGridController : MonoBehaviour
     private void setPosition(GridScript gridScript)
     {
         transform.position = new Vector3(
-            transform.position.x + (gridScript.x / 2),
-            transform.position.y + (gridScript.y / 2),
+            transform.position.x + (gridScript.width / 2),
+            transform.position.y + (gridScript.height / 2),
             transform.position.z
         );
     }

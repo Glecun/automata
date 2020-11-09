@@ -1,17 +1,28 @@
-﻿using Unity.Mathematics;
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GridScript
 {
     public readonly int cellSize;
-    public readonly int x;
-    public readonly int y;
+    public readonly int width;
+    public readonly int height;
+    private readonly List<GridSquare>[,] grid;
 
-    public GridScript(int cellSize, int x, int y)
+    public GridScript(int cellSize, int width, int height)
     {
         this.cellSize = cellSize;
-        this.x = x;
-        this.y = y;
+        this.width = width;
+        this.height = height;
+        grid = new List<GridSquare>[width, height];
+
+        for (int x = 0; x < grid.GetLength(0); x++)
+        {
+            for (int y = 0; y < grid.GetLength(1); y++)
+            {
+                grid[x, y] = new List<GridSquare>();
+            }
+        }
     }
 
     public int GetCellSize()
@@ -21,12 +32,12 @@ public class GridScript
 
     public int GetX()
     {
-        return x;
+        return width;
     }
 
     public int GetY()
     {
-        return y;
+        return height;
     }
 
     public Vector3 GetWorldPosition(int x, int y)
@@ -42,7 +53,12 @@ public class GridScript
 
     public PathInProgress calculatePath(int2 start, int2 end)
     {
-        var pathfinding = new Pathfinding(x, y, cellSize);
+        var pathfinding = new Pathfinding(width, height, cellSize, grid);
         return PathInProgress.setPath(start, end, pathfinding);
+    }
+
+    public void registerOnGrid(GridObject gridObject)
+    {
+        gridObject.zone.ForEach(gridSquare => grid[gridSquare.x, gridSquare.y].Add(gridSquare));
     }
 }
