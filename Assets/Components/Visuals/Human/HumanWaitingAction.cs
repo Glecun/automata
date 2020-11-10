@@ -27,6 +27,7 @@ public class HumanWaitingAction : MonoBehaviour
             waitOrDo(setRandomTargetPositionNearby, waitBeforeNextStep, durationWaitBeforeNextStep(),
                 !pathInProgress.isMoving());
             transform.position = pathInProgress.changePosition(transform.position, humanController.speed);
+            humanController.humanAnimationController.isMoving = pathInProgress.isMoving();
         }
     }
 

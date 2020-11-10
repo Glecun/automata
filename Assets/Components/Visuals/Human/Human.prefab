@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6310783016713924007}
   - component: {fileID: 6310783016713924004}
   - component: {fileID: -7617715564491795102}
+  - component: {fileID: 684586457}
   m_Layer: 0
   m_Name: Human
   m_TagString: Untagged
@@ -45,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed4c7a4df07a0149b3b128147a5768b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 684586457}
+  speed: 0
 --- !u!212 &6310783016713924004
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -110,3 +113,22 @@ MonoBehaviour:
   sortingOrderBase: 5000
   offset: 0
   runOnlyOnce: 0
+--- !u!95 &684586457
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310783016713924002}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53d8affcc2b625f4c8749b48cd492b67, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

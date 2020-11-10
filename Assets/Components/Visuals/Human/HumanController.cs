@@ -1,20 +1,25 @@
-﻿using Unity.Mathematics;
+﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 using static Utils;
 
 public class HumanController : MonoBehaviour
 {
+    public HumanAnimationController humanAnimationController;
+    public Animator animator = null;
     private HumanDecisionController humanDecisionController;
     private HumanActionController humanActionController;
+
 
     private Countdown betweenEachDecisionMaking;
     private const float durationBetweenEachDecisionMaking = 1f;
 
     private GameSceneController gameSceneController;
-    public float speed = 7f;
+    [NonSerialized] public float speed = 4f;
 
     private void Awake()
     {
+        humanAnimationController = new HumanAnimationController(animator);
         humanDecisionController = new HumanDecisionController();
         humanActionController = new HumanActionController(gameObject);
 
@@ -29,6 +34,7 @@ public class HumanController : MonoBehaviour
     private void Update()
     {
         waitOrDo(updateDecision, betweenEachDecisionMaking, durationBetweenEachDecisionMaking);
+        humanAnimationController.updateAnimations();
     }
 
     private void updateDecision()
