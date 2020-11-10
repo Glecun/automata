@@ -11,6 +11,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using ModestTree;
 using UnityEngine;
 
@@ -28,10 +29,63 @@ public class Pathfinding
         PathNode CreatePathNode(GridPathfinding<PathNode> g, int x, int y, List<GridSquare>[,] grids)
         {
             var isWalkable = grids[x, y].IsEmpty() || !grids[x, y].Exists(square => !square.isWalkable);
-            return new PathNode(g, x, y, isWalkable);
+            var gridObjectsType = grids[x, y].Select(square => square.gridObjectType).ToList();
+            return new PathNode(g, x, y, isWalkable, gridObjectsType);
         }
 
         grid = new GridPathfinding<PathNode>(width, height, cellSize, Vector3.zero, gridSquares, CreatePathNode);
+    }
+
+    public List<Vector3> FindPathToNearest(int startX, int startY, IGridObjectType gridObjectType)
+    {
+        var pathNodeOfNearest = getPathNodeOfNearest(startX, startY, gridObjectType);
+        return pathNodeOfNearest != null ? FindPath(startX, startY, pathNodeOfNearest.x, pathNodeOfNearest.y) : null;
+    }
+
+    private PathNode getPathNodeOfNearest(int startX, int startY, IGridObjectType gridObjectType)
+    {
+        PathNode startNode = grid.GetGridObject(startX, startY);
+
+        if (startNode == null)
+        {
+            // Invalid Path
+            return null;
+        }
+
+        openList = new List<PathNode> {startNode};
+        closedList = new List<PathNode>();
+
+        while (openList.Count > 0)
+        {
+            PathNode currentNode = GetLowestFCostNode(openList);
+
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+
+            foreach (PathNode neighbourNode in GetNeighbourList(currentNode))
+            {
+                if (closedList.Contains(neighbourNode)) continue;
+
+                if (neighbourNode.gridObjectsType.Contains(gridObjectType))
+                {
+                    return neighbourNode;
+                }
+
+                if (!neighbourNode.isWalkable)
+                {
+                    closedList.Add(neighbourNode);
+                    continue;
+                }
+
+                if (!openList.Contains(neighbourNode))
+                {
+                    openList.Add(neighbourNode);
+                }
+            }
+        }
+
+        // Out of nodes on the openList
+        return null;
     }
 
     public List<Vector3> FindPath(int startX, int startY, int endX, int endY)
@@ -100,6 +154,11 @@ public class Pathfinding
                 if (closedList.Contains(neighbourNode)) continue;
                 if (!neighbourNode.isWalkable)
                 {
+                    if (neighbourNode == endNode)
+                    {
+                        return CalculatePath(currentNode);
+                    }
+
                     closedList.Add(neighbourNode);
                     continue;
                 }

@@ -15,7 +15,7 @@ public class HumanController : MonoBehaviour
     private const float durationBetweenEachDecisionMaking = 1f;
 
     private GameSceneController gameSceneController;
-    [NonSerialized] public float speed = 4f;
+    [NonSerialized] public const float speed = 4f;
 
     private void Awake()
     {
@@ -43,15 +43,22 @@ public class HumanController : MonoBehaviour
         humanActionController.doAction(humanDecisionController.currentDecision);
     }
 
+
+    public int2 getPosition()
+    {
+        var position = gameObject.transform.position;
+        return new int2((int) position.x, (int) position.y);
+    }
+
     public PathInProgress goTo(int2 end)
     {
         var start = getPosition();
         return gameSceneController.grid.calculatePath(start, end);
     }
 
-    public int2 getPosition()
+    public PathInProgress goToNearest(IGridObjectType gridObjectType)
     {
-        var position = gameObject.transform.position;
-        return new int2((int) position.x, (int) position.y);
+        var start = getPosition();
+        return gameSceneController.grid.calculatePathToNearest(start, gridObjectType);
     }
 }

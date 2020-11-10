@@ -10,6 +10,8 @@
     --------------------------------------------------
  */
 
+using System.Collections.Generic;
+
 public class PathNode
 {
     private GridPathfinding<PathNode> grid;
@@ -22,13 +24,16 @@ public class PathNode
 
     public bool isWalkable;
     public PathNode cameFromNode;
+    public List<IGridObjectType> gridObjectsType;
 
-    public PathNode(GridPathfinding<PathNode> grid, int x, int y, bool isWalkable)
+    public PathNode(GridPathfinding<PathNode> grid, int x, int y, bool isWalkable,
+        List<IGridObjectType> gridObjectsType)
     {
         this.grid = grid;
         this.x = x;
         this.y = y;
         this.isWalkable = isWalkable;
+        this.gridObjectsType = gridObjectsType;
     }
 
     public void CalculateFCost()

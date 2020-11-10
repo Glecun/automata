@@ -57,6 +57,12 @@ public class GridScript
         return PathInProgress.setPath(start, end, pathfinding);
     }
 
+    public PathInProgress calculatePathToNearest(int2 start, IGridObjectType gridObjectType)
+    {
+        var pathfinding = new Pathfinding(width, height, cellSize, grid);
+        return PathInProgress.setPathToNearest(start, gridObjectType, pathfinding);
+    }
+
     public void registerOnGrid(GridObject gridObject)
     {
         gridObject.zone.ForEach(gridSquare => grid[gridSquare.x, gridSquare.y].Add(gridSquare));

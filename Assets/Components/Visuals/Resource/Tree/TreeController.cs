@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = System.Random;
 
-internal enum StateEnum
+public enum TreeStateEnum
 {
     CUT,
     GROWING,
@@ -15,10 +15,11 @@ public class TreeController : MonoBehaviour, IHarvestable
     [SerializeField] private Sprite tree_cut = null;
     [SerializeField] private Sprite[] treeList = null;
     private Sprite initialSprite;
-    private StateEnum currentState;
+    private TreeStateEnum _currentTreeState;
     private Countdown countdown;
     private SpriteRenderer spriteRenderer;
     private const float durationOfGrowing = 3f;
+    private GameSceneController gameSceneController;
 
     private void Awake()
     {
@@ -27,45 +28,64 @@ public class TreeController : MonoBehaviour, IHarvestable
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = initialSprite;
 
-        currentState = StateEnum.FULL;
+        _currentTreeState = TreeStateEnum.FULL;
 
         countdown = gameObject.AddComponent<Countdown>();
 
         resourceAmount = new ResourceAmount(10, ResourceEnum.WOOD);
     }
 
+    private void Start()
+    {
+        gameSceneController = GameObject.Find("GameSceneController").GetComponent<GameSceneController>();
+        registerOnGrid();
+    }
+
     public ResourceAmount RetrieveResourceAmount()
     {
         var resourceAmountToRetrieve = resourceAmount;
         resourceAmount = new ResourceAmount(0, ResourceEnum.WOOD);
-        currentState = StateEnum.CUT;
+        setCurrentState(TreeStateEnum.CUT);
         GetComponent<SpriteRenderer>().sprite = tree_cut;
         return resourceAmountToRetrieve;
     }
 
     private void Update()
     {
-        if (currentState == StateEnum.CUT)
+        if (_currentTreeState == TreeStateEnum.CUT)
         {
-            currentState = StateEnum.GROWING;
+            setCurrentState(TreeStateEnum.GROWING);
             countdown.wait(durationOfGrowing);
         }
 
         if (hasFinishedGrowing())
         {
-            currentState = StateEnum.FULL;
+            setCurrentState(TreeStateEnum.FULL);
             spriteRenderer.sprite = initialSprite;
         }
     }
 
     private bool hasFinishedGrowing()
     {
-        return currentState == StateEnum.GROWING && !countdown.isCountingDown;
+        return _currentTreeState == TreeStateEnum.GROWING && !countdown.isCountingDown;
     }
 
     private Sprite getRandomTreeSprite()
     {
         var rnd = new Random();
         return treeList[rnd.Next(0, treeList.Length)];
+    }
+
+    private void setCurrentState(TreeStateEnum treeStateEnum)
+    {
+        _currentTreeState = treeStateEnum;
+        registerOnGrid();
+    }
+
+    private void registerOnGrid()
+    {
+        var position = gameObject.transform.position;
+        gameSceneController.grid.registerOnGrid(new GridObject(false, (int) position.x, (int) position.y,
+            new GOTTree(_currentTreeState)));
     }
 }

@@ -7,19 +7,22 @@ public class GridObject
     public int height;
     public int x;
     public int y;
+    public IGridObjectType gridObjectType;
     public readonly List<GridSquare> zone;
 
-    public GridObject(bool isWalkable, int x, int y) : this(isWalkable, 1, 1, x, y)
+    public GridObject(bool isWalkable, int x, int y, IGridObjectType gridObjectType) : this(isWalkable, 1, 1, x, y,
+        gridObjectType)
     {
     }
 
-    public GridObject(bool isWalkable, int width, int height, int x, int y)
+    public GridObject(bool isWalkable, int width, int height, int x, int y, IGridObjectType gridObjectType)
     {
         this.isWalkable = isWalkable;
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
+        this.gridObjectType = gridObjectType;
         zone = createZone();
     }
 
@@ -30,7 +33,7 @@ public class GridObject
         {
             for (int j = 0; j < height; j++)
             {
-                gridSquares.Add(new GridSquare(x + i, y + j, isWalkable));
+                gridSquares.Add(new GridSquare(x + i, y + j, isWalkable, gridObjectType));
             }
         }
 

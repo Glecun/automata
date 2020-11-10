@@ -28,6 +28,19 @@ public class PathInProgress
         return new PathInProgress(0, pathVectorList);
     }
 
+    public static PathInProgress setPathToNearest(int2 start, IGridObjectType gridObjectType, Pathfinding pathfinding)
+    {
+        var pathVectorList = pathfinding.FindPathToNearest(start.x, start.y, gridObjectType);
+
+        if (pathVectorList != null && pathVectorList.Count > 1)
+        {
+            pathVectorList.RemoveAt(0);
+        }
+
+        return new PathInProgress(0, pathVectorList);
+    }
+
+
     public Vector3 changePosition(Vector3 currentPosition, float speed)
     {
         var newPosition = currentPosition;

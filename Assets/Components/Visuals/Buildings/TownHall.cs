@@ -8,6 +8,7 @@ public class TownHall : MonoBehaviour
     {
         gameSceneController = GameObject.Find("GameSceneController").GetComponent<GameSceneController>();
         var position = gameObject.transform.position;
-        gameSceneController.grid.registerOnGrid(new GridObject(false, 4, 5, (int) position.x, (int) position.y));
+        gameSceneController.grid.registerOnGrid(new GridObject(false, 4, 5, (int) position.x, (int) position.y,
+            new GOTTownHall()));
     }
 }
