@@ -1,19 +1,27 @@
-﻿public enum Decision
+﻿using UnityEngine;
+
+public enum Decision
 {
-    WAITING
+    WAITING,
+    GATHER_WOOD
 }
 
-public class HumanDecisionController
+public class HumanDecisionController : MonoBehaviour
 {
-    public Decision currentDecision;
+    private TownHall townHall;
 
-    public HumanDecisionController()
+    private void Start()
     {
-        currentDecision = Decision.WAITING;
+        townHall = GameObject.Find("TownHall").GetComponent<TownHall>();
     }
 
-    public void updateDecision()
+    public Decision getNewDecision()
     {
-        currentDecision = Decision.WAITING;
+        if (townHall.resourceStorage.get(ResourceEnum.WOOD).amount <= 50)
+        {
+            return Decision.GATHER_WOOD;
+        }
+
+        return Decision.WAITING;
     }
 }

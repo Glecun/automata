@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.Mathematics;
 using UnityEngine;
 using static Utils;
 
@@ -9,26 +8,24 @@ public class HumanController : MonoBehaviour
     public Animator animator = null;
     private HumanDecisionController humanDecisionController;
     private HumanActionController humanActionController;
-
+    public HumanMovementController humanMovementController;
+    public HumanResourceController humanResourceController;
 
     private Countdown betweenEachDecisionMaking;
     private const float durationBetweenEachDecisionMaking = 1f;
 
-    private GameSceneController gameSceneController;
+
     [NonSerialized] public const float speed = 4f;
 
     private void Awake()
     {
         humanAnimationController = new HumanAnimationController(animator);
-        humanDecisionController = new HumanDecisionController();
-        humanActionController = new HumanActionController(gameObject);
+        humanResourceController = new HumanResourceController();
+        humanMovementController = gameObject.AddComponent<HumanMovementController>();
 
+        humanDecisionController = gameObject.AddComponent<HumanDecisionController>();
+        humanActionController = gameObject.AddComponent<HumanActionController>();
         betweenEachDecisionMaking = gameObject.AddComponent<Countdown>();
-    }
-
-    private void Start()
-    {
-        gameSceneController = GameObject.Find("GameSceneController").GetComponent<GameSceneController>();
     }
 
     private void Update()
@@ -39,26 +36,6 @@ public class HumanController : MonoBehaviour
 
     private void updateDecision()
     {
-        humanDecisionController.updateDecision();
-        humanActionController.doAction(humanDecisionController.currentDecision);
-    }
-
-
-    public int2 getPosition()
-    {
-        var position = gameObject.transform.position;
-        return new int2((int) position.x, (int) position.y);
-    }
-
-    public PathInProgress goTo(int2 end)
-    {
-        var start = getPosition();
-        return gameSceneController.grid.calculatePath(start, end);
-    }
-
-    public PathInProgress goToNearest(IGridObjectType gridObjectType)
-    {
-        var start = getPosition();
-        return gameSceneController.grid.calculatePathToNearest(start, gridObjectType);
+        humanActionController.doAction(humanDecisionController.getNewDecision());
     }
 }

@@ -67,4 +67,9 @@ public class GridScript
     {
         gridObject.zone.ForEach(gridSquare => grid[gridSquare.x, gridSquare.y].Add(gridSquare));
     }
+
+    public T getIfInRange<T>()
+    {
+        throw new System.NotImplementedException();
+    }
 }

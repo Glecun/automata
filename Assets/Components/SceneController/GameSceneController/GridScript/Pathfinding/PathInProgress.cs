@@ -74,4 +74,9 @@ public class PathInProgress
     {
         return pathVectorList != null;
     }
+
+    public bool isInARangeOf(int range)
+    {
+        return pathVectorList.Count <= range;
+    }
 }

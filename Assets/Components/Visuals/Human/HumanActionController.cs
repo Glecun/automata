@@ -1,17 +1,29 @@
 ﻿using UnityEngine;
 
-public class HumanActionController
+public class HumanActionController : MonoBehaviour
 {
     private readonly HumanWaitingAction humanWaitingAction;
+    private readonly HumanGatherWoodAction humanGatherWoodAction;
 
-    public HumanActionController(GameObject gameObject)
+    private Decision currentDecision;
+
+    public void doAction(Decision decision)
     {
-        humanWaitingAction = gameObject.AddComponent<HumanWaitingAction>();
+        if (currentDecision != decision)
+        {
+            removeAllActions();
+            if (decision == Decision.WAITING)
+                gameObject.AddComponent<HumanWaitingAction>();
+            if (decision == Decision.GATHER_WOOD)
+                gameObject.AddComponent<HumanGatherWoodAction>();
+
+            currentDecision = decision;
+        }
     }
 
-    public void doAction(Decision action)
+    private void removeAllActions()
     {
-        if (action == Decision.WAITING)
-            humanWaitingAction.doAction();
+        Destroy(humanWaitingAction);
+        Destroy(humanGatherWoodAction);
     }
 }

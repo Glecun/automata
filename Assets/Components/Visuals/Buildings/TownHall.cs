@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class TownHall : MonoBehaviour
 {
     private GameSceneController gameSceneController;
+
+    public ResourceStorage resourceStorage;
 
     void Start()
     {
@@ -10,5 +13,7 @@ public class TownHall : MonoBehaviour
         var position = gameObject.transform.position;
         gameSceneController.grid.registerOnGrid(new GridObject(false, 4, 5, (int) position.x, (int) position.y,
             new GOTTownHall()));
+
+        resourceStorage = new ResourceStorage(new List<ResourceAmount>());
     }
 }
