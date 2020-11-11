@@ -5,13 +5,14 @@ public class GridSquare
     public int x;
     public int y;
     public bool isWalkable;
-    public IGridObjectType gridObjectType;
+    public ReferenceToObject referenceToObject;
 
-    public GridSquare(int x, int y, bool isWalkable, IGridObjectType gridObjectType)
+
+    public GridSquare(int x, int y, bool isWalkable, ReferenceToObject referenceToObject)
     {
         this.x = x;
         this.y = y;
         this.isWalkable = isWalkable;
-        this.gridObjectType = gridObjectType;
+        this.referenceToObject = referenceToObject;
     }
 }

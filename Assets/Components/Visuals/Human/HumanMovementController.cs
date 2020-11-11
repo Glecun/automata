@@ -29,10 +29,10 @@ public class HumanMovementController : MonoBehaviour
         return gameSceneController.grid.calculatePathToNearest(start, gridObjectType);
     }
 
-    public T getIfInRange<T>(IGridObjectType gridObject)
+    public MonoBehaviour getIfInRange(IGridObjectType gridObject)
     {
         var pathInProgress = goToNearest(gridObject);
-        return isInRange(pathInProgress) ? "lobjet mdr" : null; //TODO : ICI renvoyer l'object
+        return isInRange(pathInProgress) ? pathInProgress.destinationobj : null;
     }
 
     private static bool isInRange(PathInProgress pathInProgress)

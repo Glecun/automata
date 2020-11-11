@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -65,11 +66,19 @@ public class GridScript
 
     public void registerOnGrid(GridObject gridObject)
     {
+        deregisterOnGrid(gridObject.referenceToObject.objectController);
         gridObject.zone.ForEach(gridSquare => grid[gridSquare.x, gridSquare.y].Add(gridSquare));
     }
 
-    public T getIfInRange<T>()
+    private void deregisterOnGrid(MonoBehaviour objectController)
     {
-        throw new System.NotImplementedException();
+        for (int x = 0; x < grid.GetLength(0); x++)
+        {
+            for (int y = 0; y < grid.GetLength(1); y++)
+            {
+                grid[x, y] = grid[x, y].Where(square => square.referenceToObject.objectController != objectController)
+                    .ToList();
+            }
+        }
     }
 }

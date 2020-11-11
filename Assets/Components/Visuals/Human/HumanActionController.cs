@@ -2,8 +2,8 @@
 
 public class HumanActionController : MonoBehaviour
 {
-    private readonly HumanWaitingAction humanWaitingAction;
-    private readonly HumanGatherWoodAction humanGatherWoodAction;
+    private readonly HumanWaitingAction humanWaitingAction = null;
+    private readonly HumanGatherWoodAction humanGatherWoodAction = null;
 
     private Decision currentDecision;
 

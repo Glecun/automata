@@ -29,20 +29,79 @@ public class Pathfinding
         PathNode CreatePathNode(GridPathfinding<PathNode> g, int x, int y, List<GridSquare>[,] grids)
         {
             var isWalkable = grids[x, y].IsEmpty() || !grids[x, y].Exists(square => !square.isWalkable);
-            var gridObjectsType = grids[x, y].Select(square => square.gridObjectType).ToList();
-            return new PathNode(g, x, y, isWalkable, gridObjectsType);
+            var referenceToObjects = grids[x, y].Select(square => square.referenceToObject).ToList();
+            return new PathNode(g, x, y, isWalkable, referenceToObjects);
         }
 
         grid = new GridPathfinding<PathNode>(width, height, cellSize, Vector3.zero, gridSquares, CreatePathNode);
     }
 
-    public List<Vector3> FindPathToNearest(int startX, int startY, IGridObjectType gridObjectType)
+    public void FindPathToNearest(int startX, int startY, IGridObjectType gridObjectType, out List<Vector3> vectorPath,
+        out MonoBehaviour monoBehaviour)
     {
         var pathNodeOfNearest = getPathNodeOfNearest(startX, startY, gridObjectType);
-        return pathNodeOfNearest != null ? FindPath(startX, startY, pathNodeOfNearest.x, pathNodeOfNearest.y) : null;
+        if (pathNodeOfNearest != null)
+        {
+            vectorPath = FindPath(startX, startY, pathNodeOfNearest.x, pathNodeOfNearest.y);
+            monoBehaviour = pathNodeOfNearest.referenceToObjects
+                .Find(referenceToObject => referenceToObject.gridObjectType.Equals(gridObjectType)).objectController;
+        }
+        else
+        {
+            vectorPath = null;
+            monoBehaviour = null;
+        }
     }
 
     private PathNode getPathNodeOfNearest(int startX, int startY, IGridObjectType gridObjectType)
+    {
+        PathNode startNode = grid.GetGridObject(startX, startY);
+
+        if (startNode == null)
+        {
+            // Invalid Path
+            return null;
+        }
+
+        openList = new List<PathNode> {startNode};
+        closedList = new List<PathNode>();
+
+        while (openList.Count > 0)
+        {
+            PathNode currentNode = GetLowestFCostNode(openList);
+
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+
+            if (currentNode.referenceToObjects.Exists(referenceToObject =>
+                referenceToObject.gridObjectType.Equals(gridObjectType)))
+            {
+                return currentNode;
+            }
+
+            foreach (PathNode neighbourNode in GetNeighbourList(currentNode))
+            {
+                if (closedList.Contains(neighbourNode)) continue;
+
+                if (!neighbourNode.isWalkable && !neighbourNode.referenceToObjects.Exists(referenceToObject =>
+                    referenceToObject.gridObjectType.Equals(gridObjectType)))
+                {
+                    closedList.Add(neighbourNode);
+                    continue;
+                }
+
+                if (!openList.Contains(neighbourNode))
+                {
+                    openList.Add(neighbourNode);
+                }
+            }
+        }
+
+        // Out of nodes on the openList
+        return null;
+    }
+
+    private PathNode getExactPositionOfNearest(int startX, int startY, IGridObjectType gridObjectType)
     {
         PathNode startNode = grid.GetGridObject(startX, startY);
 
@@ -66,7 +125,8 @@ public class Pathfinding
             {
                 if (closedList.Contains(neighbourNode)) continue;
 
-                if (neighbourNode.gridObjectsType.Contains(gridObjectType))
+                if (neighbourNode.referenceToObjects.Exists(referenceToObject =>
+                    referenceToObject.gridObjectType.Equals(gridObjectType)))
                 {
                     return neighbourNode;
                 }

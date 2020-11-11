@@ -7,13 +7,15 @@ public class PathInProgress
 {
     public int currentPathIndex;
     public List<Vector3> pathVectorList;
+    public MonoBehaviour destinationobj;
 
-    public static readonly PathInProgress NOT_MOVING = new PathInProgress(0, null);
+    public static readonly PathInProgress NOT_MOVING = new PathInProgress(0, null, null);
 
-    private PathInProgress(int currentPathIndex, List<Vector3> pathVectorList)
+    private PathInProgress(int currentPathIndex, List<Vector3> pathVectorList, MonoBehaviour destinationobj)
     {
         this.currentPathIndex = currentPathIndex;
         this.pathVectorList = pathVectorList;
+        this.destinationobj = destinationobj;
     }
 
     public static PathInProgress setPath(int2 start, int2 end, Pathfinding pathfinding)
@@ -25,19 +27,21 @@ public class PathInProgress
             pathVectorList.RemoveAt(0);
         }
 
-        return new PathInProgress(0, pathVectorList);
+        return new PathInProgress(0, pathVectorList, null);
     }
 
     public static PathInProgress setPathToNearest(int2 start, IGridObjectType gridObjectType, Pathfinding pathfinding)
     {
-        var pathVectorList = pathfinding.FindPathToNearest(start.x, start.y, gridObjectType);
+        List<Vector3> pathVectorList;
+        MonoBehaviour objectController;
+        pathfinding.FindPathToNearest(start.x, start.y, gridObjectType, out pathVectorList, out objectController);
 
         if (pathVectorList != null && pathVectorList.Count > 1)
         {
             pathVectorList.RemoveAt(0);
         }
 
-        return new PathInProgress(0, pathVectorList);
+        return new PathInProgress(0, pathVectorList, objectController);
     }
 
 
@@ -54,6 +58,7 @@ public class PathInProgress
             }
             else
             {
+                newPosition = targetPosition;
                 currentPathIndex++;
                 if (currentPathIndex >= pathVectorList.Count)
                 {
@@ -77,6 +82,6 @@ public class PathInProgress
 
     public bool isInARangeOf(int range)
     {
-        return pathVectorList.Count <= range;
+        return pathVectorList != null && pathVectorList.Count <= range;
     }
 }

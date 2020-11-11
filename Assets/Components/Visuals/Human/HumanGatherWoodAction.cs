@@ -23,17 +23,46 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         if (state == State.GO_GATHER)
             goGather();
+        if (state == State.RETURN_RESOURCE)
+            goReturnResource();
+
+        state = determineState();
 
         transform.position = pathInProgress.changePosition(transform.position, HumanController.speed);
         humanController.humanAnimationController.isMoving = pathInProgress.isMoving();
     }
 
-    private void goGather()
+    private void goReturnResource()
     {
-        humanController.humanMovementController.getIfCloseTo()
         if (!pathInProgress.isMoving())
         {
-            pathInProgress = humanController.humanMovementController.goToNearest(new GOTTree(TreeStateEnum.FULL));
+            var townHallController = (TownHall) humanController.humanMovementController.getIfInRange(new GOTTownHall());
+            if (townHallController != null)
+            {
+                humanController.humanResourceController.resourceStorage.set(new ResourceAmount(0, ResourceEnum.WOOD));
+                //TODO a modifier
+                townHallController.resourceStorage.set(
+                    humanController.humanResourceController.resourceStorage.get(ResourceEnum.WOOD));
+            }
+
+            pathInProgress = humanController.humanMovementController.goToNearest(new GOTTownHall());
+        }
+    }
+
+    private void goGather()
+    {
+        if (!pathInProgress.isMoving())
+        {
+            var treeController =
+                (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL));
+            if (treeController != null)
+            {
+                humanController.humanResourceController.resourceStorage.set(treeController.RetrieveResourceAmount());
+            }
+            else
+            {
+                pathInProgress = humanController.humanMovementController.goToNearest(new GOTTree(TreeStateEnum.FULL));
+            }
         }
     }
 

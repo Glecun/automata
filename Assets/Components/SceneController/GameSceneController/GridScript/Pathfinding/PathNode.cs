@@ -24,16 +24,16 @@ public class PathNode
 
     public bool isWalkable;
     public PathNode cameFromNode;
-    public List<IGridObjectType> gridObjectsType;
+    public List<ReferenceToObject> referenceToObjects;
 
     public PathNode(GridPathfinding<PathNode> grid, int x, int y, bool isWalkable,
-        List<IGridObjectType> gridObjectsType)
+        List<ReferenceToObject> referenceToObjects)
     {
         this.grid = grid;
         this.x = x;
         this.y = y;
         this.isWalkable = isWalkable;
-        this.gridObjectsType = gridObjectsType;
+        this.referenceToObjects = referenceToObjects;
     }
 
     public void CalculateFCost()

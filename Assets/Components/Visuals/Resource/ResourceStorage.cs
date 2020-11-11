@@ -4,7 +4,7 @@ using System.Linq;
 
 public class ResourceStorage
 {
-    public readonly List<ResourceAmount> resourceAmounts;
+    public List<ResourceAmount> resourceAmounts;
 
     public ResourceStorage(List<ResourceAmount> resourceAmounts)
     {
@@ -23,5 +23,11 @@ public class ResourceStorage
     public ResourceAmount get(ResourceEnum resourceEnum)
     {
         return resourceAmounts.Find(resource => resource.resourceEnum == resourceEnum);
+    }
+
+    public void set(ResourceAmount resourceAmount)
+    {
+        resourceAmounts = resourceAmounts.Select(resource =>
+            resource.resourceEnum == resourceAmount.resourceEnum ? resourceAmount : resource).ToList();
     }
 }

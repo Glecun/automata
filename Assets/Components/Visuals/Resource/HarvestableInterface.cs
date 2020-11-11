@@ -8,6 +8,11 @@
         this.amount = amount;
         this.resourceEnum = resourceEnum;
     }
+
+    public ResourceAmount copy()
+    {
+        return new ResourceAmount(this.amount, this.resourceEnum);
+    }
 }
 
 public interface IHarvestable

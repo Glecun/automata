@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Random = System.Random;
 
 public enum TreeStateEnum
@@ -18,7 +19,7 @@ public class TreeController : MonoBehaviour, IHarvestable
     private TreeStateEnum _currentTreeState;
     private Countdown countdown;
     private SpriteRenderer spriteRenderer;
-    private const float durationOfGrowing = 3f;
+    private const float durationOfGrowing = 10f;
     private GameSceneController gameSceneController;
 
     private void Awake()
@@ -43,7 +44,12 @@ public class TreeController : MonoBehaviour, IHarvestable
 
     public ResourceAmount RetrieveResourceAmount()
     {
-        var resourceAmountToRetrieve = resourceAmount;
+        if (_currentTreeState != TreeStateEnum.FULL)
+        {
+            throw new Exception("Trying to cut a Tree not full");
+        }
+
+        var resourceAmountToRetrieve = resourceAmount.copy();
         resourceAmount = new ResourceAmount(0, ResourceEnum.WOOD);
         setCurrentState(TreeStateEnum.CUT);
         GetComponent<SpriteRenderer>().sprite = tree_cut;
@@ -61,6 +67,7 @@ public class TreeController : MonoBehaviour, IHarvestable
         if (hasFinishedGrowing())
         {
             setCurrentState(TreeStateEnum.FULL);
+            resourceAmount = new ResourceAmount(10, ResourceEnum.WOOD);
             spriteRenderer.sprite = initialSprite;
         }
     }
@@ -85,7 +92,11 @@ public class TreeController : MonoBehaviour, IHarvestable
     private void registerOnGrid()
     {
         var position = gameObject.transform.position;
-        gameSceneController.grid.registerOnGrid(new GridObject(false, (int) position.x, (int) position.y,
-            new GOTTree(_currentTreeState)));
+        gameSceneController.grid.registerOnGrid(new GridObject(
+            false,
+            (int) position.x,
+            (int) position.y,
+            new ReferenceToObject(new GOTTree(_currentTreeState), this)
+        ));
     }
 }
