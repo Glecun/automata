@@ -101,53 +101,6 @@ public class Pathfinding
         return null;
     }
 
-    private PathNode getExactPositionOfNearest(int startX, int startY, IGridObjectType gridObjectType)
-    {
-        PathNode startNode = grid.GetGridObject(startX, startY);
-
-        if (startNode == null)
-        {
-            // Invalid Path
-            return null;
-        }
-
-        openList = new List<PathNode> {startNode};
-        closedList = new List<PathNode>();
-
-        while (openList.Count > 0)
-        {
-            PathNode currentNode = GetLowestFCostNode(openList);
-
-            openList.Remove(currentNode);
-            closedList.Add(currentNode);
-
-            foreach (PathNode neighbourNode in GetNeighbourList(currentNode))
-            {
-                if (closedList.Contains(neighbourNode)) continue;
-
-                if (neighbourNode.referenceToObjects.Exists(referenceToObject =>
-                    referenceToObject.gridObjectType.Equals(gridObjectType)))
-                {
-                    return neighbourNode;
-                }
-
-                if (!neighbourNode.isWalkable)
-                {
-                    closedList.Add(neighbourNode);
-                    continue;
-                }
-
-                if (!openList.Contains(neighbourNode))
-                {
-                    openList.Add(neighbourNode);
-                }
-            }
-        }
-
-        // Out of nodes on the openList
-        return null;
-    }
-
     public List<Vector3> FindPath(int startX, int startY, int endX, int endY)
     {
         List<PathNode> path = FindPathNodes(startX, startY, endX, endY);
