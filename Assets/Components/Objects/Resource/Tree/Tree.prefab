@@ -103,6 +103,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5726d43242774c0081e8217b060e51e3, type: 3}
   - {fileID: 21300000, guid: d3e668e4d70c48f39a9233fc68187254, type: 3}
   - {fileID: 21300000, guid: c7aa468672334984bf491bbd62eb1fb4, type: 3}
+  infoPopupPrefab: {fileID: 1592797088868474829, guid: 2250337199e8dab4cb0c0088a8ab68db,
+    type: 3}
 --- !u!114 &-8607315151180613504
 MonoBehaviour:
   m_ObjectHideFlags: 0

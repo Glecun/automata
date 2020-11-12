@@ -46,8 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed4c7a4df07a0149b3b128147a5768b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoPopupPrefab: {fileID: 1592797088868474829, guid: 2250337199e8dab4cb0c0088a8ab68db,
+    type: 3}
   animator: {fileID: 684586457}
-  speed: 0
+  humanMovementController: {fileID: 0}
 --- !u!212 &6310783016713924004
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -111,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sortingOrderBase: 5000
-  offset: 0
+  offset: 10
   runOnlyOnce: 0
 --- !u!95 &684586457
 Animator:

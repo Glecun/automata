@@ -12,11 +12,18 @@ public class HumanGatherWoodAction : MonoBehaviour
     private PathInProgress pathInProgress;
     private State state;
 
+    private Countdown timeToGatherCountdown;
+    private float durationTimeToGather = 3f;
+    private Countdown timeToDepositCountdown;
+    private float durationTimeToDeposit = 3f;
+
     private void Awake()
     {
         humanController = gameObject.GetComponent<HumanController>();
         pathInProgress = PathInProgress.NOT_MOVING;
         state = determineState();
+        timeToGatherCountdown = gameObject.AddComponent<Countdown>();
+        timeToDepositCountdown = gameObject.AddComponent<Countdown>();
     }
 
     private void Update()
@@ -39,10 +46,19 @@ public class HumanGatherWoodAction : MonoBehaviour
             var townHallController = (TownHall) humanController.humanMovementController.getIfInRange(new GOTTownHall());
             if (townHallController != null)
             {
-                humanController.humanResourceController.resourceStorage.set(new ResourceAmount(0, ResourceEnum.WOOD));
-                //TODO a modifier
-                townHallController.resourceStorage.set(
-                    humanController.humanResourceController.resourceStorage.get(ResourceEnum.WOOD));
+                void depositResource()
+                {
+                    humanController.humanAnimationController.isDoing = false;
+                    var resourceAmount = humanController.humanResourceController.resourceStorage.get(ResourceEnum.WOOD);
+                    townHallController.depositResource(resourceAmount);
+                    humanController.humanResourceController.resourceStorage.set(
+                        new ResourceAmount(0, ResourceEnum.WOOD));
+                    InfoPopupController.Create(humanController.infoPopupPrefab,
+                        humanController.humanMovementController.getTopPosition(0.2f), "-" + resourceAmount.amount);
+                }
+
+                humanController.humanAnimationController.isDoing = true;
+                Utils.waitAndDo(depositResource, timeToDepositCountdown, durationTimeToDeposit, true);
             }
 
             pathInProgress = humanController.humanMovementController.goToNearest(new GOTTownHall());
@@ -57,7 +73,17 @@ public class HumanGatherWoodAction : MonoBehaviour
                 (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL));
             if (treeController != null)
             {
-                humanController.humanResourceController.resourceStorage.set(treeController.RetrieveResourceAmount());
+                void getResource()
+                {
+                    humanController.humanAnimationController.isDoing = false;
+                    var resourceAmount = treeController.RetrieveResourceAmount();
+                    humanController.humanResourceController.resourceStorage.set(resourceAmount);
+                    InfoPopupController.Create(humanController.infoPopupPrefab,
+                        humanController.humanMovementController.getTopPosition(0.2f), "+" + resourceAmount.amount);
+                }
+
+                humanController.humanAnimationController.isDoing = true;
+                Utils.waitAndDo(getResource, timeToGatherCountdown, durationTimeToGather, true);
             }
             else
             {

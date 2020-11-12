@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1592797088868474830}
   - component: {fileID: 1592797088868474831}
   - component: {fileID: 1592797088868474828}
+  - component: {fileID: -7387748587622837709}
   m_Layer: 0
   m_Name: infoPopup
   m_TagString: Untagged
@@ -175,3 +176,15 @@ MonoBehaviour:
   m_maskType: 0
   _SortingLayerID: -1420717479
   _SortingOrder: 0
+--- !u!114 &-7387748587622837709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592797088868474829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec7c3b2c385c6d54ea45d4176eea4fa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

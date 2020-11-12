@@ -17,7 +17,7 @@ public class HumanDecisionController : MonoBehaviour
 
     public Decision getNewDecision()
     {
-        if (townHall.resourceStorage.get(ResourceEnum.WOOD).amount <= 50)
+        if (townHall.getResource(ResourceEnum.WOOD).amount <= 50)
         {
             return Decision.GATHER_WOOD;
         }

@@ -2,8 +2,8 @@
 
 public class HumanActionController : MonoBehaviour
 {
-    private readonly HumanWaitingAction humanWaitingAction = null;
-    private readonly HumanGatherWoodAction humanGatherWoodAction = null;
+    private HumanWaitingAction humanWaitingAction = null;
+    private HumanGatherWoodAction humanGatherWoodAction = null;
 
     private Decision currentDecision;
 
@@ -13,9 +13,9 @@ public class HumanActionController : MonoBehaviour
         {
             removeAllActions();
             if (decision == Decision.WAITING)
-                gameObject.AddComponent<HumanWaitingAction>();
+                humanWaitingAction = gameObject.AddComponent<HumanWaitingAction>();
             if (decision == Decision.GATHER_WOOD)
-                gameObject.AddComponent<HumanGatherWoodAction>();
+                humanGatherWoodAction = gameObject.AddComponent<HumanGatherWoodAction>();
 
             currentDecision = decision;
         }

@@ -1,8 +1,10 @@
 ﻿using System;
+using UnityEngine;
+using Random = System.Random;
 
 public class Utils
 {
-    public static void waitOrDo(Action todo, Countdown countdown, float duration)
+    public static void doAndWait(Action todo, Countdown countdown, float duration)
     {
         if (!countdown.isCountingDown)
         {
@@ -11,7 +13,7 @@ public class Utils
         }
     }
 
-    public static void waitOrDo(Action todo, Countdown countdown, float duration, bool startCountDown)
+    public static void waitAndDo(Action todo, Countdown countdown, float duration, bool startCountDown)
     {
         if (!countdown.isCountingDown && !countdown.isAcknowledged)
         {
@@ -28,5 +30,12 @@ public class Utils
     {
         var random = new Random(System.DateTime.Now.Millisecond);
         return random.Next(min, max + 1);
+    }
+
+    public static Vector3 getTopPosition(Transform transform, int height, float offset)
+    {
+        var vector = transform.position;
+        vector.y += height + offset;
+        return vector;
     }
 }

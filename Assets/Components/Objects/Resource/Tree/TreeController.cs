@@ -15,12 +15,14 @@ public class TreeController : MonoBehaviour, IHarvestable
 
     [SerializeField] private Sprite tree_cut = null;
     [SerializeField] private Sprite[] treeList = null;
+    [SerializeField] private GameObject infoPopupPrefab;
     private Sprite initialSprite;
     private TreeStateEnum _currentTreeState;
     private Countdown countdown;
     private SpriteRenderer spriteRenderer;
     private const float durationOfGrowing = 10f;
     private GameSceneController gameSceneController;
+    private const int HEIGHT = 2;
 
     private void Awake()
     {
@@ -53,6 +55,8 @@ public class TreeController : MonoBehaviour, IHarvestable
         resourceAmount = new ResourceAmount(0, ResourceEnum.WOOD);
         setCurrentState(TreeStateEnum.CUT);
         GetComponent<SpriteRenderer>().sprite = tree_cut;
+        InfoPopupController.Create(infoPopupPrefab, Utils.getTopPosition(transform, HEIGHT, 0.2f),
+            "-" + resourceAmountToRetrieve.amount);
         return resourceAmountToRetrieve;
     }
 

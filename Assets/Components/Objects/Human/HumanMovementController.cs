@@ -5,6 +5,7 @@ public class HumanMovementController : MonoBehaviour
 {
     private GameSceneController gameSceneController;
     private const int RANGE = 1;
+    public const int height = 1;
 
     private void Start()
     {
@@ -15,6 +16,11 @@ public class HumanMovementController : MonoBehaviour
     {
         var position = gameObject.transform.position;
         return new int2((int) position.x, (int) position.y);
+    }
+
+    public Vector3 getTopPosition(float offset)
+    {
+        return Utils.getTopPosition(transform, height, offset);
     }
 
     public PathInProgress goTo(int2 end)

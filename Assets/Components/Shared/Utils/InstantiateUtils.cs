@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InstantiateUtils : MonoBehaviour
 {
@@ -9,6 +7,7 @@ public class InstantiateUtils : MonoBehaviour
         var gameObjectCreated = UnityEngine.Object.Instantiate(gameObject);
         return setName(gameObjectCreated, gameObject);
     }
+
     public static GameObject Instantiate(GameObject gameObject, Transform parent)
     {
         var gameObjectCreated = UnityEngine.Object.Instantiate(gameObject, parent);
@@ -20,6 +19,13 @@ public class InstantiateUtils : MonoBehaviour
         var gameObjectCreated = UnityEngine.Object.Instantiate(gameObject, position, rotation, parent);
         return setName(gameObjectCreated, gameObject);
     }
+
+    public static GameObject Instantiate(GameObject gameObject, Vector3 position, Quaternion rotation)
+    {
+        var gameObjectCreated = UnityEngine.Object.Instantiate(gameObject, position, rotation);
+        return setName(gameObjectCreated, gameObject);
+    }
+
 
     private static GameObject setName(GameObject gameObjectCreated, GameObject gameObject)
     {

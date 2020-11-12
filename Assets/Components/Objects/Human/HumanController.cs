@@ -4,6 +4,7 @@ using static Utils;
 
 public class HumanController : MonoBehaviour
 {
+    public GameObject infoPopupPrefab;
     public HumanAnimationController humanAnimationController;
     public Animator animator = null;
     private HumanDecisionController humanDecisionController;
@@ -30,7 +31,7 @@ public class HumanController : MonoBehaviour
 
     private void Update()
     {
-        waitOrDo(updateDecision, betweenEachDecisionMaking, durationBetweenEachDecisionMaking);
+        doAndWait(updateDecision, betweenEachDecisionMaking, durationBetweenEachDecisionMaking);
         humanAnimationController.updateAnimations();
     }
 
