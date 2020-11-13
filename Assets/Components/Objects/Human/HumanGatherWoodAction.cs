@@ -101,4 +101,11 @@ public class HumanGatherWoodAction : MonoBehaviour
 
         return State.GO_GATHER;
     }
+
+    public void destroy()
+    {
+        Destroy(timeToDepositCountdown);
+        Destroy(timeToGatherCountdown);
+        Destroy(this);
+    }
 }

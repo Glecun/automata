@@ -23,7 +23,9 @@ public class HumanActionController : MonoBehaviour
 
     private void removeAllActions()
     {
-        Destroy(humanWaitingAction);
-        Destroy(humanGatherWoodAction);
+        if (humanWaitingAction != null)
+            humanWaitingAction.destroy();
+        if (humanGatherWoodAction != null)
+            humanGatherWoodAction.destroy();
     }
 }

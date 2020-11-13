@@ -34,4 +34,10 @@ public class HumanWaitingAction : MonoBehaviour
         );
         pathInProgress = humanController.humanMovementController.goTo(end);
     }
+
+    public void destroy()
+    {
+        Destroy(waitBeforeNextStep);
+        Destroy(this);
+    }
 }
