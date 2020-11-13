@@ -69,13 +69,13 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         if (!pathInProgress.isMoving())
         {
-            var treeController =
-                (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL));
+            var treeController = getNearestTreeMaybeCurrentlyCut();
             if (treeController != null)
             {
                 void getResource()
                 {
                     humanController.humanAnimationController.isDoing = false;
+                    treeController.setWhoIsCurrentlyCutting(null);
                     var resourceAmount = treeController.RetrieveResourceAmount();
                     humanController.humanResourceController.resourceStorage.set(resourceAmount);
                     InfoPopupController.Create(humanController.infoPopupPrefab,
@@ -83,13 +83,27 @@ public class HumanGatherWoodAction : MonoBehaviour
                 }
 
                 humanController.humanAnimationController.isDoing = true;
+                treeController.setWhoIsCurrentlyCutting(this);
                 Utils.waitAndDo(getResource, timeToGatherCountdown, durationTimeToGather, true);
             }
             else
             {
-                pathInProgress = humanController.humanMovementController.goToNearest(new GOTTree(TreeStateEnum.FULL));
+                pathInProgress =
+                    humanController.humanMovementController.goToNearest(new GOTTree(TreeStateEnum.FULL, null));
             }
         }
+    }
+
+    private TreeController getNearestTreeMaybeCurrentlyCut()
+    {
+        if (humanController.humanAnimationController.isDoing)
+        {
+            return (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
+                this));
+        }
+
+        return (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
+            null));
     }
 
     private State determineState()
@@ -106,6 +120,7 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         Destroy(timeToDepositCountdown);
         Destroy(timeToGatherCountdown);
+        humanController.humanAnimationController.isDoing = false;
         Destroy(this);
     }
 }

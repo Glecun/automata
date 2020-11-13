@@ -16,6 +16,8 @@ public class TreeController : MonoBehaviour, IHarvestable
     [SerializeField] private Sprite tree_cut = null;
     [SerializeField] private Sprite[] treeList = null;
     [SerializeField] private GameObject infoPopupPrefab = null;
+
+    private MonoBehaviour whoIsCurrentlyCutting = null;
     private Sprite initialSprite;
     private TreeStateEnum _currentTreeState;
     private Countdown countdown;
@@ -100,7 +102,13 @@ public class TreeController : MonoBehaviour, IHarvestable
             false,
             (int) position.x,
             (int) position.y,
-            new ReferenceToObject(new GOTTree(_currentTreeState), this)
+            new ReferenceToObject(new GOTTree(_currentTreeState, whoIsCurrentlyCutting), this)
         ));
+    }
+
+    public void setWhoIsCurrentlyCutting(MonoBehaviour newWhoIsCurrentlyCutting)
+    {
+        whoIsCurrentlyCutting = newWhoIsCurrentlyCutting;
+        registerOnGrid();
     }
 }
