@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infoPopupPrefab: {fileID: 1592797088868474829, guid: 2250337199e8dab4cb0c0088a8ab68db,
     type: 3}
+  humanPrefab: {fileID: 6310783016713924002, guid: fbb7d0287aaa84345829895738498763,
+    type: 3}
 --- !u!212 &-6887566484020967977
 SpriteRenderer:
   m_ObjectHideFlags: 0

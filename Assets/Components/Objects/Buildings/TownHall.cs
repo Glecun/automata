@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TownHall : MonoBehaviour
 {
-    public GameObject infoPopupPrefab;
+    [SerializeField] private GameObject infoPopupPrefab = null;
+    [SerializeField] private GameObject humanPrefab = null;
 
     private GameSceneController gameSceneController;
     private ResourceStorage resourceStorage;
+    private Countdown countdownBeforeCreateHuman;
+    private float countdownBeforeCreateHumanDuration = 20f;
     private const int HEIGHT = 5;
+    private const int WIDTH = 5;
 
     void Start()
     {
@@ -23,6 +28,31 @@ public class TownHall : MonoBehaviour
         ));
 
         resourceStorage = new ResourceStorage(new List<ResourceAmount>());
+
+        countdownBeforeCreateHuman = gameObject.AddComponent<Countdown>();
+    }
+
+    private void Update()
+    {
+        void createHuman()
+        {
+            InstantiateUtils.Instantiate(humanPrefab, getDoorPosition(), Quaternion.identity);
+        }
+
+        if (resourceStorage.get(ResourceEnum.WOOD).amount >= 10 && !countdownBeforeCreateHuman.isCountingDown)
+        {
+            InfoPopupController.Create(infoPopupPrefab, Utils.getTopPosition(transform, HEIGHT, 0.7f),
+                "Création d'un humain");
+            var currentResourceAmount = resourceStorage.get(ResourceEnum.WOOD);
+            currentResourceAmount.amount -= 10;
+            resourceStorage.set(currentResourceAmount);
+            Utils.waitAndDo(createHuman, countdownBeforeCreateHuman, countdownBeforeCreateHumanDuration, true);
+        }
+    }
+
+    private Vector3 getDoorPosition()
+    {
+        return new Vector3(transform.position.x + (float) Math.Ceiling(WIDTH / 2m), transform.position.y);
     }
 
     public void depositResource(ResourceAmount resourceAmount)
