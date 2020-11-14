@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Random = System.Random;
 
 public enum TreeStateEnum
 {
@@ -85,8 +84,7 @@ public class TreeController : MonoBehaviour, IHarvestable
 
     private Sprite getRandomTreeSprite()
     {
-        var rnd = new Random();
-        return treeList[rnd.Next(0, treeList.Length)];
+        return treeList[Utils.random(0, treeList.Length - 1)];
     }
 
     private void setCurrentState(TreeStateEnum treeStateEnum)

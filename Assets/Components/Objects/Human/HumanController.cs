@@ -5,8 +5,6 @@ using static Utils;
 public class HumanController : MonoBehaviour
 {
     public GameObject infoPopupPrefab;
-    public HumanAnimationController humanAnimationController;
-    public Animator animator = null;
     private HumanDecisionController humanDecisionController;
     private HumanActionController humanActionController;
     public HumanMovementController humanMovementController;
@@ -17,10 +15,12 @@ public class HumanController : MonoBehaviour
 
 
     [NonSerialized] public const float speed = 4f;
+    [NonSerialized] public GenderEnum GenderEnum;
 
     private void Awake()
     {
-        humanAnimationController = new HumanAnimationController(animator);
+        GenderEnum = getRandomGender();
+
         humanResourceController = new HumanResourceController();
         humanMovementController = gameObject.AddComponent<HumanMovementController>();
 
@@ -29,14 +29,25 @@ public class HumanController : MonoBehaviour
         betweenEachDecisionMaking = gameObject.AddComponent<Countdown>();
     }
 
+    private GenderEnum getRandomGender()
+    {
+        var values = Enum.GetValues(typeof(GenderEnum));
+        return (GenderEnum) values.GetValue(random(0, values.Length - 1));
+    }
+
     private void Update()
     {
         doAndWait(updateDecision, betweenEachDecisionMaking, durationBetweenEachDecisionMaking);
-        humanAnimationController.updateAnimations();
     }
 
     private void updateDecision()
     {
         humanActionController.doAction(humanDecisionController.getNewDecision());
     }
+}
+
+public enum GenderEnum
+{
+    MALE,
+    FEMALE
 }

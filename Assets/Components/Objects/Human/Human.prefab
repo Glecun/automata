@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6310783016713924004}
   - component: {fileID: -7617715564491795102}
   - component: {fileID: 684586457}
+  - component: {fileID: -4452056333339638948}
   m_Layer: 0
   m_Name: Human
   m_TagString: Untagged
@@ -48,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infoPopupPrefab: {fileID: 1592797088868474829, guid: 2250337199e8dab4cb0c0088a8ab68db,
     type: 3}
-  animator: {fileID: 684586457}
   humanMovementController: {fileID: 0}
 --- !u!212 &6310783016713924004
 SpriteRenderer:
@@ -125,7 +125,7 @@ Animator:
   m_GameObject: {fileID: 6310783016713924002}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 53d8affcc2b625f4c8749b48cd492b67, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -134,3 +134,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-4452056333339638948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310783016713924002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf07177dec12ca489e30674bbf541b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 684586457}
+  animatorControllers:
+  - {fileID: 9100000, guid: 53d8affcc2b625f4c8749b48cd492b67, type: 2}
+  - {fileID: 22100000, guid: 09ac80c4e9085bc40bd7e6bcbecda153, type: 2}
+  isMoving: 0
+  isDoing: 0

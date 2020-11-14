@@ -6,6 +6,7 @@ using static Utils;
 public class HumanWaitingAction : MonoBehaviour
 {
     private HumanController humanController;
+    private HumanAnimationController humanAnimationController;
     private PathInProgress pathInProgress;
 
     private Countdown waitBeforeNextStep;
@@ -13,6 +14,7 @@ public class HumanWaitingAction : MonoBehaviour
 
     private void Awake()
     {
+        humanAnimationController = gameObject.GetComponent<HumanAnimationController>();
         waitBeforeNextStep = gameObject.AddComponent<Countdown>();
         humanController = gameObject.GetComponent<HumanController>();
         pathInProgress = PathInProgress.NOT_MOVING;
@@ -23,7 +25,7 @@ public class HumanWaitingAction : MonoBehaviour
         waitAndDo(setRandomTargetPositionNearby, waitBeforeNextStep, durationWaitBeforeNextStep(),
             !pathInProgress.isMoving());
         transform.position = pathInProgress.changePosition(transform.position, HumanController.speed);
-        humanController.humanAnimationController.isMoving = pathInProgress.isMoving();
+        humanAnimationController.isMoving = pathInProgress.isMoving();
     }
 
     private void setRandomTargetPositionNearby()
@@ -38,6 +40,7 @@ public class HumanWaitingAction : MonoBehaviour
     public void destroy()
     {
         Destroy(waitBeforeNextStep);
+        humanAnimationController.resetAnimations();
         Destroy(this);
     }
 }

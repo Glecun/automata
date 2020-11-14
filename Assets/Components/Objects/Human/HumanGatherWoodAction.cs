@@ -9,6 +9,7 @@ internal enum State
 public class HumanGatherWoodAction : MonoBehaviour
 {
     private HumanController humanController;
+    private HumanAnimationController humanAnimationController;
     private PathInProgress pathInProgress;
     private State state;
 
@@ -20,6 +21,7 @@ public class HumanGatherWoodAction : MonoBehaviour
     private void Awake()
     {
         humanController = gameObject.GetComponent<HumanController>();
+        humanAnimationController = gameObject.GetComponent<HumanAnimationController>();
         pathInProgress = PathInProgress.NOT_MOVING;
         state = determineState();
         timeToGatherCountdown = gameObject.AddComponent<Countdown>();
@@ -36,7 +38,7 @@ public class HumanGatherWoodAction : MonoBehaviour
         state = determineState();
 
         transform.position = pathInProgress.changePosition(transform.position, HumanController.speed);
-        humanController.humanAnimationController.isMoving = pathInProgress.isMoving();
+        humanAnimationController.isMoving = pathInProgress.isMoving();
     }
 
     private void goReturnResource()
@@ -48,7 +50,7 @@ public class HumanGatherWoodAction : MonoBehaviour
             {
                 void depositResource()
                 {
-                    humanController.humanAnimationController.isDoing = false;
+                    humanAnimationController.isDoing = false;
                     var resourceAmount = humanController.humanResourceController.resourceStorage.get(ResourceEnum.WOOD);
                     townHallController.depositResource(resourceAmount);
                     humanController.humanResourceController.resourceStorage.set(
@@ -57,7 +59,7 @@ public class HumanGatherWoodAction : MonoBehaviour
                         humanController.humanMovementController.getTopPosition(0.2f), "-" + resourceAmount.amount);
                 }
 
-                humanController.humanAnimationController.isDoing = true;
+                humanAnimationController.isDoing = true;
                 Utils.waitAndDo(depositResource, timeToDepositCountdown, durationTimeToDeposit, true);
             }
 
@@ -74,7 +76,7 @@ public class HumanGatherWoodAction : MonoBehaviour
             {
                 void getResource()
                 {
-                    humanController.humanAnimationController.isDoing = false;
+                    humanAnimationController.isDoing = false;
                     treeController.setWhoIsCurrentlyCutting(null);
                     var resourceAmount = treeController.RetrieveResourceAmount();
                     humanController.humanResourceController.resourceStorage.set(resourceAmount);
@@ -82,7 +84,7 @@ public class HumanGatherWoodAction : MonoBehaviour
                         humanController.humanMovementController.getTopPosition(0.2f), "+" + resourceAmount.amount);
                 }
 
-                humanController.humanAnimationController.isDoing = true;
+                humanAnimationController.isDoing = true;
                 treeController.setWhoIsCurrentlyCutting(this);
                 Utils.waitAndDo(getResource, timeToGatherCountdown, durationTimeToGather, true);
             }
@@ -96,7 +98,7 @@ public class HumanGatherWoodAction : MonoBehaviour
 
     private TreeController getNearestTreeMaybeCurrentlyCut()
     {
-        if (humanController.humanAnimationController.isDoing)
+        if (humanAnimationController.isDoing)
         {
             return (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
                 this));
@@ -120,7 +122,7 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         Destroy(timeToDepositCountdown);
         Destroy(timeToGatherCountdown);
-        humanController.humanAnimationController.isDoing = false;
+        humanAnimationController.resetAnimations();
         Destroy(this);
     }
 }
