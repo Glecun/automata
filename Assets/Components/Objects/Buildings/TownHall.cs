@@ -1,27 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TownHall : MonoBehaviour
 {
     [SerializeField] private GameObject infoPopupPrefab = null;
     [SerializeField] private GameObject humanPrefab = null;
+    [SerializeField] private Sprite door_close = null;
+    [SerializeField] private Sprite door_open = null;
+    [SerializeField] private SpriteRenderer spriteRenderer = null;
 
     private GameSceneController gameSceneController;
     private ResourceStorage resourceStorage;
     private Countdown countdownBeforeCreateHuman;
-    private float countdownBeforeCreateHumanDuration = 20f;
+    private const float countdownBeforeCreateHumanDuration = 20f;
+    private Countdown countdownKeepDoorOpen;
+    private const float countdownKeepDoorOpenDuration = 1f;
     private const int HEIGHT = 5;
-    private const int WIDTH = 5;
+    private const int WIDTH = 4;
 
     void Start()
     {
+        spriteRenderer.sprite = door_close;
         gameSceneController = GameObject.Find("GameSceneController").GetComponent<GameSceneController>();
         var position = gameObject.transform.position;
         gameSceneController.grid.registerOnGrid(new GridObject(
             false,
-            4,
-            5,
+            WIDTH,
+            HEIGHT,
             (int) position.x,
             (int) position.y,
             new ReferenceToObject(new GOTTownHall(), this)
@@ -30,12 +35,14 @@ public class TownHall : MonoBehaviour
         resourceStorage = new ResourceStorage(new List<ResourceAmount>());
 
         countdownBeforeCreateHuman = gameObject.AddComponent<Countdown>();
+        countdownKeepDoorOpen = gameObject.AddComponent<Countdown>();
     }
 
     private void Update()
     {
         void createHuman()
         {
+            spriteRenderer.sprite = door_open;
             InstantiateUtils.Instantiate(humanPrefab, getDoorPosition(), Quaternion.identity);
         }
 
@@ -48,11 +55,16 @@ public class TownHall : MonoBehaviour
             resourceStorage.set(currentResourceAmount);
             Utils.waitAndDo(createHuman, countdownBeforeCreateHuman, countdownBeforeCreateHumanDuration, true);
         }
+
+
+        Utils.waitAndDo(() => { spriteRenderer.sprite = door_close; }, countdownKeepDoorOpen,
+            countdownKeepDoorOpenDuration, spriteRenderer.sprite == door_open);
     }
 
     private Vector3 getDoorPosition()
     {
-        return new Vector3(transform.position.x + (float) Math.Ceiling(WIDTH / 2m), transform.position.y);
+        var position = transform.position;
+        return new Vector3(position.x + (float) WIDTH / 2 - 0.5f, position.y);
     }
 
     public void depositResource(ResourceAmount resourceAmount)

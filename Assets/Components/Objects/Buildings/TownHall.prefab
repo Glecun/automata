@@ -49,6 +49,9 @@ MonoBehaviour:
     type: 3}
   humanPrefab: {fileID: 6310783016713924002, guid: fbb7d0287aaa84345829895738498763,
     type: 3}
+  door_close: {fileID: 21300000, guid: 14d1f8142510d9c41b8fa45122723bd3, type: 3}
+  door_open: {fileID: 21300000, guid: 26164c527908ff241b42e23d773305fa, type: 3}
+  spriteRenderer: {fileID: -6887566484020967977}
 --- !u!212 &-6887566484020967977
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -112,5 +115,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sortingOrderBase: 5000
-  offset: 0
+  offset: 2
   runOnlyOnce: 1

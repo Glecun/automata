@@ -55,7 +55,7 @@ public class TreeController : MonoBehaviour, IHarvestable
         var resourceAmountToRetrieve = resourceAmount.copy();
         resourceAmount = new ResourceAmount(0, ResourceEnum.WOOD);
         setCurrentState(TreeStateEnum.CUT);
-        GetComponent<SpriteRenderer>().sprite = tree_cut;
+        spriteRenderer.sprite = tree_cut;
         InfoPopupController.Create(infoPopupPrefab, Utils.getTopPosition(transform, HEIGHT, 0.2f),
             "-" + resourceAmountToRetrieve.amount);
         return resourceAmountToRetrieve;

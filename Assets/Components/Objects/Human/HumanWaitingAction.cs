@@ -5,7 +5,6 @@ using static Utils;
 
 public class HumanWaitingAction : MonoBehaviour
 {
-    private HumanController humanController;
     private HumanAnimationController humanAnimationController;
     private HumanMovementController humanMovementController;
     private PathInProgress pathInProgress;
@@ -18,7 +17,6 @@ public class HumanWaitingAction : MonoBehaviour
         humanAnimationController = gameObject.GetComponent<HumanAnimationController>();
         humanMovementController = gameObject.GetComponent<HumanMovementController>();
         waitBeforeNextStep = gameObject.AddComponent<Countdown>();
-        humanController = gameObject.GetComponent<HumanController>();
         pathInProgress = PathInProgress.NOT_MOVING;
     }
 
