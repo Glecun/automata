@@ -10,6 +10,8 @@ public class HumanGatherWoodAction : MonoBehaviour
 {
     private HumanController humanController;
     private HumanAnimationController humanAnimationController;
+    private HumanMovementController humanMovementController;
+
     private PathInProgress pathInProgress;
     private State state;
     private TreeController currentlyCuttingTree;
@@ -23,6 +25,7 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         humanController = gameObject.GetComponent<HumanController>();
         humanAnimationController = gameObject.GetComponent<HumanAnimationController>();
+        humanMovementController = gameObject.GetComponent<HumanMovementController>();
         pathInProgress = PathInProgress.NOT_MOVING;
         state = determineState();
         timeToGatherCountdown = gameObject.AddComponent<Countdown>();
@@ -46,7 +49,7 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         if (!pathInProgress.isMoving())
         {
-            var townHallController = (TownHall) humanController.humanMovementController.getIfInRange(new GOTTownHall());
+            var townHallController = (TownHall) humanMovementController.getIfInRange(new GOTTownHall());
             if (townHallController != null)
             {
                 void depositResource()
@@ -57,7 +60,7 @@ public class HumanGatherWoodAction : MonoBehaviour
                     humanController.humanResourceController.resourceStorage.set(
                         new ResourceAmount(0, ResourceEnum.WOOD));
                     InfoPopupController.Create(humanController.infoPopupPrefab,
-                        humanController.humanMovementController.getTopPosition(0.2f), "-" + resourceAmount.amount);
+                        humanMovementController.getTopPosition(0.2f), "-" + resourceAmount.amount);
                 }
 
                 humanAnimationController.isDoing = true;
@@ -65,7 +68,7 @@ public class HumanGatherWoodAction : MonoBehaviour
             }
             else
             {
-                pathInProgress = humanController.humanMovementController.goToNearest(new GOTTownHall());
+                pathInProgress = humanMovementController.goToNearest(new GOTTownHall());
             }
         }
     }
@@ -85,7 +88,7 @@ public class HumanGatherWoodAction : MonoBehaviour
                     var resourceAmount = treeController.RetrieveResourceAmount();
                     humanController.humanResourceController.resourceStorage.set(resourceAmount);
                     InfoPopupController.Create(humanController.infoPopupPrefab,
-                        humanController.humanMovementController.getTopPosition(0.2f), "+" + resourceAmount.amount);
+                        humanMovementController.getTopPosition(0.2f), "+" + resourceAmount.amount);
                 }
 
                 humanAnimationController.isDoing = true;
@@ -95,8 +98,7 @@ public class HumanGatherWoodAction : MonoBehaviour
             }
             else
             {
-                pathInProgress =
-                    humanController.humanMovementController.goToNearest(new GOTTree(TreeStateEnum.FULL, null));
+                pathInProgress = humanMovementController.goToNearest(new GOTTree(TreeStateEnum.FULL, null));
             }
         }
     }
@@ -105,11 +107,11 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         if (humanAnimationController.isDoing)
         {
-            return (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
+            return (TreeController) humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
                 this));
         }
 
-        return (TreeController) humanController.humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
+        return (TreeController) humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
             null));
     }
 

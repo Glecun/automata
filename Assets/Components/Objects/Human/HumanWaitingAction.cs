@@ -7,6 +7,7 @@ public class HumanWaitingAction : MonoBehaviour
 {
     private HumanController humanController;
     private HumanAnimationController humanAnimationController;
+    private HumanMovementController humanMovementController;
     private PathInProgress pathInProgress;
 
     private Countdown waitBeforeNextStep;
@@ -15,6 +16,7 @@ public class HumanWaitingAction : MonoBehaviour
     private void Awake()
     {
         humanAnimationController = gameObject.GetComponent<HumanAnimationController>();
+        humanMovementController = gameObject.GetComponent<HumanMovementController>();
         waitBeforeNextStep = gameObject.AddComponent<Countdown>();
         humanController = gameObject.GetComponent<HumanController>();
         pathInProgress = PathInProgress.NOT_MOVING;
@@ -31,10 +33,10 @@ public class HumanWaitingAction : MonoBehaviour
     private void setRandomTargetPositionNearby()
     {
         var end = new int2(
-            humanController.humanMovementController.getPosition().x + random(-1, 1),
-            humanController.humanMovementController.getPosition().y + random(-1, 1)
+            humanMovementController.getPosition().x + random(-1, 1),
+            humanMovementController.getPosition().y + random(-1, 1)
         );
-        pathInProgress = humanController.humanMovementController.goTo(end);
+        pathInProgress = humanMovementController.goTo(end);
     }
 
     public void destroy()

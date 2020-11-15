@@ -14,6 +14,9 @@ GameObject:
   - component: {fileID: -7617715564491795102}
   - component: {fileID: 684586457}
   - component: {fileID: -4452056333339638948}
+  - component: {fileID: 1797477271295068737}
+  - component: {fileID: -7208398175443984894}
+  - component: {fileID: -4024727610604049555}
   m_Layer: 0
   m_Name: Human
   m_TagString: Untagged
@@ -152,3 +155,40 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 09ac80c4e9085bc40bd7e6bcbecda153, type: 2}
   isMoving: 0
   isDoing: 0
+--- !u!114 &1797477271295068737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310783016713924002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5227cdccb60e1c846a3b4347b96f5516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7208398175443984894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310783016713924002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0362d4813f438b41877f3e12033278c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humanDecisionController: {fileID: 1797477271295068737}
+--- !u!114 &-4024727610604049555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310783016713924002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6052939fa24e44ca8c455a94516f605f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

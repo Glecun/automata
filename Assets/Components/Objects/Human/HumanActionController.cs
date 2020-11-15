@@ -2,10 +2,30 @@
 
 public class HumanActionController : MonoBehaviour
 {
+    [SerializeField] private HumanDecisionController humanDecisionController = null;
+
     private HumanWaitingAction humanWaitingAction = null;
     private HumanGatherWoodAction humanGatherWoodAction = null;
 
+    private Countdown betweenEachDecisionMaking;
+    private const float durationBetweenEachDecisionMaking = 1f;
+
     private Decision currentDecision;
+
+    private void Awake()
+    {
+        betweenEachDecisionMaking = gameObject.AddComponent<Countdown>();
+    }
+
+    private void Update()
+    {
+        Utils.doAndWait(updateDecision, betweenEachDecisionMaking, durationBetweenEachDecisionMaking);
+    }
+
+    private void updateDecision()
+    {
+        doAction(humanDecisionController.getNewDecision());
+    }
 
     public void doAction(Decision decision)
     {
