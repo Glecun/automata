@@ -10,11 +10,6 @@ public class HumanDecisionController : MonoBehaviour
 {
     private TownHall townHall;
 
-    private void Start()
-    {
-        initWhenFound();
-    }
-
     private void Update()
     {
         initWhenFound();

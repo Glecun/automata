@@ -12,6 +12,7 @@ public class HumanGatherWoodAction : MonoBehaviour
     private HumanAnimationController humanAnimationController;
     private PathInProgress pathInProgress;
     private State state;
+    private TreeController currentlyCuttingTree;
 
     private Countdown timeToGatherCountdown;
     private float durationTimeToGather = 3f;
@@ -62,8 +63,10 @@ public class HumanGatherWoodAction : MonoBehaviour
                 humanAnimationController.isDoing = true;
                 Utils.waitAndDo(depositResource, timeToDepositCountdown, durationTimeToDeposit, true);
             }
-
-            pathInProgress = humanController.humanMovementController.goToNearest(new GOTTownHall());
+            else
+            {
+                pathInProgress = humanController.humanMovementController.goToNearest(new GOTTownHall());
+            }
         }
     }
 
@@ -78,6 +81,7 @@ public class HumanGatherWoodAction : MonoBehaviour
                 {
                     humanAnimationController.isDoing = false;
                     treeController.setWhoIsCurrentlyCutting(null);
+                    currentlyCuttingTree = null;
                     var resourceAmount = treeController.RetrieveResourceAmount();
                     humanController.humanResourceController.resourceStorage.set(resourceAmount);
                     InfoPopupController.Create(humanController.infoPopupPrefab,
@@ -86,6 +90,7 @@ public class HumanGatherWoodAction : MonoBehaviour
 
                 humanAnimationController.isDoing = true;
                 treeController.setWhoIsCurrentlyCutting(this);
+                currentlyCuttingTree = treeController;
                 Utils.waitAndDo(getResource, timeToGatherCountdown, durationTimeToGather, true);
             }
             else
@@ -123,6 +128,8 @@ public class HumanGatherWoodAction : MonoBehaviour
         Destroy(timeToDepositCountdown);
         Destroy(timeToGatherCountdown);
         humanAnimationController.resetAnimations();
+        if (currentlyCuttingTree != null)
+            currentlyCuttingTree.setWhoIsCurrentlyCutting(null);
         Destroy(this);
     }
 }

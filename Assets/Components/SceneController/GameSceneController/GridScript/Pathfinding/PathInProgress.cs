@@ -51,10 +51,11 @@ public class PathInProgress
         if (pathVectorList != null)
         {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
-            if (Vector3.Distance(currentPosition, targetPosition) > 0.01f)
+            var movementWidth = (speed * Time.deltaTime);
+            if (Vector3.Distance(currentPosition, targetPosition) > movementWidth)
             {
                 Vector3 moveDir = (targetPosition - currentPosition).normalized;
-                newPosition = currentPosition + moveDir * (speed * Time.deltaTime);
+                newPosition = currentPosition + moveDir * movementWidth;
             }
             else
             {
