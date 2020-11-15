@@ -121,6 +121,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1704125431 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4252060753641111029, guid: 03361ab6213780c478a517b3d19e54c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 4252060754156307849}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1704125432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704125431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb539268ee2b20a42b0ebd7edb8ed3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1704125433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704125431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22817af92dc3fdd4dbaec29c56463340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4252060754156307849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -208,6 +238,11 @@ PrefabInstance:
       propertyPath: m_AllowDynamicResolution
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8222396598055812137, guid: 03361ab6213780c478a517b3d19e54c8,
+        type: 3}
+      propertyPath: cameraFollow
+      value: 
+      objectReference: {fileID: 1704125433}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03361ab6213780c478a517b3d19e54c8, type: 3}
 --- !u!1001 &8516239008399436782
@@ -276,6 +311,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ApplicationController
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150176033074114110, guid: ace0f02f320112e4a8f5fbd223d6f403,
+        type: 3}
+      propertyPath: cameraFollow
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ace0f02f320112e4a8f5fbd223d6f403, type: 3}
