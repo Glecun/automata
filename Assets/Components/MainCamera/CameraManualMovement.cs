@@ -6,7 +6,7 @@ public class CameraManualMovement : MonoBehaviour
     void Update()
     {
         Vector3 moveDir = new Vector3(0, 0);
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.Z))
         {
             moveDir.y = +1;
         }
@@ -16,7 +16,7 @@ public class CameraManualMovement : MonoBehaviour
             moveDir.y = -1;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.Q))
         {
             moveDir.x = -1;
         }
@@ -27,6 +27,6 @@ public class CameraManualMovement : MonoBehaviour
         }
 
         float manualCameraSpeed = 80f;
-        transform.position += moveDir * manualCameraSpeed * Time.deltaTime;
+        transform.position += moveDir * (manualCameraSpeed * Time.deltaTime);
     }
 }

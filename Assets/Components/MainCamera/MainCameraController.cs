@@ -1,21 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.Mathematics;
+using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
-    [SerializeField] private CameraFollow cameraFollow;
-
-    private Vector3 cameraFollowPosition;
-    private float zoom = 10f;
-
-    private const float zoomChangeAmount = 150f;
-    private const float edgeSize = 50f;
-    private const float moveAmount = 30f;
+    private Camera myCamera;
+    private const float zoomChangeAmount = 100f;
+    private const float edgeSize = 100f;
+    private const float moveAmount = 5f;
+    private const float accModifier = 0.1f;
     private const float zoomMin = 5f;
     private const float zoomMax = 10f;
 
-    private void Awake()
+    //TODO à calculer
+    private static readonly Vector2 xLimit = new Vector2(0, 22);
+    private static readonly Vector2 yLimit = new Vector2(0, 14);
+
+
+    //TODO: noter de faire des edgeSize de coins plus grand 
+
+    private void Start()
     {
-        cameraFollow.Setup(() => cameraFollowPosition, () => zoom, new Vector2(0, 22), new Vector2(0, 14));
+        myCamera = transform.GetComponent<Camera>();
     }
 
     private void Update()
@@ -28,41 +34,73 @@ public class MainCameraController : MonoBehaviour
     {
         if (Input.mouseScrollDelta.y > 0)
         {
-            zoom -= zoomChangeAmount * Time.deltaTime;
+            myCamera.orthographicSize -= zoomChangeAmount * Time.deltaTime;
         }
 
         if (Input.mouseScrollDelta.y < 0)
         {
-            zoom += zoomChangeAmount * Time.deltaTime;
+            myCamera.orthographicSize += zoomChangeAmount * Time.deltaTime;
         }
 
-        zoom = Mathf.Clamp(zoom, zoomMin, zoomMax);
+        myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, zoomMin, zoomMax);
+
+        var xWorldSize = xLimit.y - xLimit.x;
+        var yWorldSize = yLimit.y - yLimit.x;
+        var maxZoomWidth = xWorldSize * ((float) Screen.height / Screen.width) / 2;
+        var maxZoomHeight = yWorldSize / 2;
+        var zoomMaxScreen = Math.Min(maxZoomHeight, maxZoomWidth);
+        myCamera.orthographicSize = Mathf.Clamp(myCamera.orthographicSize, 0, zoomMaxScreen);
     }
 
     private void HandleEdgeMovement()
     {
+        var tmp = transform.position;
         if (Input.mousePosition.x > Screen.width - edgeSize)
         {
             //EDGE RIGHT
-            cameraFollowPosition.x += moveAmount * Time.deltaTime;
+            var acc = (Input.mousePosition.x - (Screen.width - edgeSize)) * accModifier;
+            tmp.x += (moveAmount + acc) * Time.deltaTime;
         }
 
         if (Input.mousePosition.x < edgeSize)
         {
             //EDGE LEFT
-            cameraFollowPosition.x -= moveAmount * Time.deltaTime;
+            var acc = (edgeSize - Input.mousePosition.x) * accModifier;
+            tmp.x -= (moveAmount + acc) * Time.deltaTime;
         }
 
         if (Input.mousePosition.y > Screen.height - edgeSize)
         {
             //EDGE UP
-            cameraFollowPosition.y += moveAmount * Time.deltaTime;
+            var acc = (Input.mousePosition.y - (Screen.height - edgeSize)) * accModifier;
+            tmp.y += (moveAmount + acc) * Time.deltaTime;
         }
 
         if (Input.mousePosition.y < edgeSize)
         {
             //EDGE DOWN
-            cameraFollowPosition.y -= moveAmount * Time.deltaTime;
+            var acc = (edgeSize - Input.mousePosition.y) * accModifier;
+            tmp.y -= (moveAmount + acc) * Time.deltaTime;
         }
+
+        transform.position = HandleLimit(tmp);
+    }
+
+    private Vector3 HandleLimit(Vector3 position)
+    {
+        var screenSize = getScreenSize();
+        var halfScreenSizeX = screenSize.x / 2;
+        var halfScreenSizeY = screenSize.y / 2;
+
+        position.x = Mathf.Clamp(position.x, xLimit.x + halfScreenSizeX, xLimit.y - halfScreenSizeX);
+        position.y = Mathf.Clamp(position.y, yLimit.x + halfScreenSizeY, yLimit.y - halfScreenSizeY);
+        return position;
+    }
+
+    private float2 getScreenSize()
+    {
+        float height = myCamera.orthographicSize * 2.0f;
+        float width = height * Screen.width / Screen.height;
+        return new float2(width, height);
     }
 }
