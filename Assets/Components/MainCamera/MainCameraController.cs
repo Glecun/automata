@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
+    [SerializeField] private ApplicationController applicationController;
     private Camera myCamera;
     private const float zoomChangeAmount = 100f;
     private const float edgeSize = 100f;
@@ -11,17 +12,15 @@ public class MainCameraController : MonoBehaviour
     private const float accModifier = 0.1f;
     private const float zoomMin = 5f;
     private const float zoomMax = 10f;
-
-    //TODO à calculer
-    private static readonly Vector2 xLimit = new Vector2(0, 22);
-    private static readonly Vector2 yLimit = new Vector2(0, 14);
-
-
-    //TODO: noter de faire des edgeSize de coins plus grand 
+    private Vector2 xLimit;
+    private Vector2 yLimit;
 
     private void Start()
     {
         myCamera = transform.GetComponent<Camera>();
+        var settings = applicationController.GetComponent<Settings>();
+        xLimit = new Vector2(0, settings.numberOfCellInLine);
+        yLimit = new Vector2(0, settings.numberOfCellInColumn);
     }
 
     private void Update()
