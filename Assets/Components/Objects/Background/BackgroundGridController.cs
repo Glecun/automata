@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BackgroundGridController : MonoBehaviour
 {
     private void Start()
     {
-        setPosition(GameObject.Find("GameSceneController").GetComponent<GameSceneController>().grid);
+        moveBackgroundToOrigin();
     }
 
-    // I didnt find how to set pivot to botomleft with tilemap, so i move the whole tilemap so that the bottom left is at 0,0 
-    private void setPosition(GridScript gridScript)
+    private void moveBackgroundToOrigin()
     {
-        transform.position = new Vector3(
-            transform.position.x + (gridScript.width / 2),
-            transform.position.y + (gridScript.height / 2),
-            transform.position.z
-        );
+        Tilemap tilemap = GetComponentsInChildren<Tilemap>()[0];
+        var cellBounds = tilemap.cellBounds;
+        var cellBottomLeft = new Vector3(cellBounds.min.x, cellBounds.min.y);
+        var position = transform.position;
+        position = new Vector3(position.x - cellBottomLeft.x, position.y - cellBottomLeft.y, position.z);
+        transform.position = position;
     }
 }

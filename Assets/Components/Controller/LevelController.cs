@@ -18,7 +18,7 @@ public class LevelController : MonoBehaviour
         InstantiateUtils.Instantiate(tree, new Vector3(19, 4), Quaternion.identity, transform);
 
         //TownHall
-        InstantiateUtils.Instantiate(townHall, new Vector3(8, 2), Quaternion.identity, transform);
+        InstantiateUtils.Instantiate(townHall, new Vector3(8, 3), Quaternion.identity, transform);
 
         //Human
         InstantiateUtils.Instantiate(human, new Vector3(9.5f, 2), Quaternion.identity, transform);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
-    [SerializeField] private ApplicationController applicationController;
+    [SerializeField] private ApplicationController applicationController = null;
     private Camera myCamera;
     private const float zoomChangeAmount = 100f;
     private const float edgeSize = 100f;

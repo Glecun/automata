@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4707189603239869279}
   - component: {fileID: -6887566484020967977}
   - component: {fileID: 3877906522942168112}
+  - component: {fileID: 916501272}
   m_Layer: 0
   m_Name: TownHall
   m_TagString: Untagged
@@ -89,7 +90,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1052033373
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 14d1f8142510d9c41b8fa45122723bd3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -117,3 +118,18 @@ MonoBehaviour:
   sortingOrderBase: 5000
   offset: 2
   runOnlyOnce: 1
+--- !u!114 &916501272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151751804312085520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee999295a917a2841a00e92601ea2f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0.5, y: 0.5, z: 0}
+  angle: -4
+  Material: {fileID: 2100000, guid: b52135f94aa06c64cb357612b19571a8, type: 2}
