@@ -15,7 +15,7 @@ public class HumanDecisionController : MonoBehaviour
 
     private void Update()
     {
-        initWhenFound();
+        townHall = Utils.initWhenFound(townHall, () => GameObject.Find("TownHall").GetComponent<TownHall>());
         checkIfJustBornActionDone();
     }
 
@@ -42,12 +42,5 @@ public class HumanDecisionController : MonoBehaviour
         {
             justBornActionDone = true;
         }
-    }
-
-    private void initWhenFound()
-    {
-        if (townHall) return;
-        var townHallGameObject = GameObject.Find("TownHall");
-        townHall = townHallGameObject != null ? townHallGameObject.GetComponent<TownHall>() : null;
     }
 }

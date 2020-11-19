@@ -8,14 +8,7 @@ public class PanelInfoController : MonoBehaviour
 
     private void Update()
     {
-        initWhenFound(); //TODO : trouver moyen de faire mieux
+        townHall = Utils.initWhenFound(townHall, () => GameObject.Find("TownHall").GetComponent<TownHall>());
         woodAmount.text = townHall != null ? townHall.getResource(ResourceEnum.WOOD).amount.ToString() : "0";
-    }
-
-    private void initWhenFound()
-    {
-        if (townHall) return;
-        var townHallGameObject = GameObject.Find("TownHall");
-        townHall = townHallGameObject != null ? townHallGameObject.GetComponent<TownHall>() : null;
     }
 }

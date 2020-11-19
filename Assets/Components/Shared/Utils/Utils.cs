@@ -38,4 +38,10 @@ public class Utils
         vector.y += height + offset;
         return vector;
     }
+
+    public static T initWhenFound<T>(T objToInit, Func<T> fun)
+    {
+        if (objToInit != null) return objToInit;
+        return fun();
+    }
 }
