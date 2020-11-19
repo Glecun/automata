@@ -15,6 +15,7 @@ public class TownHall : MonoBehaviour
     private const float countdownBeforeCreateHumanDuration = 20f;
     private Countdown countdownKeepDoorOpen;
     private const float countdownKeepDoorOpenDuration = 1f;
+    private bool doCreateHuman = false;
     private const int HEIGHT = 5;
     private const int WIDTH = 4;
 
@@ -40,12 +41,7 @@ public class TownHall : MonoBehaviour
 
     private void Update()
     {
-        void createHuman()
-        {
-            spriteRenderer.sprite = door_open;
-            InstantiateUtils.Instantiate(humanPrefab, getDoorPosition(), Quaternion.identity);
-        }
-
+        Utils.waitAndDo(createHuman, countdownBeforeCreateHuman, countdownBeforeCreateHumanDuration, doCreateHuman);
         if (resourceStorage.get(ResourceEnum.WOOD).amount >= 10 && !countdownBeforeCreateHuman.isCountingDown)
         {
             InfoPopupController.Create(infoPopupPrefab, Utils.getTopPosition(transform, HEIGHT, 0.7f),
@@ -53,12 +49,18 @@ public class TownHall : MonoBehaviour
             var currentResourceAmount = resourceStorage.get(ResourceEnum.WOOD);
             currentResourceAmount.amount -= 10;
             resourceStorage.set(currentResourceAmount);
-            Utils.waitAndDo(createHuman, countdownBeforeCreateHuman, countdownBeforeCreateHumanDuration, true);
+            doCreateHuman = true;
         }
-
 
         Utils.waitAndDo(() => { spriteRenderer.sprite = door_close; }, countdownKeepDoorOpen,
             countdownKeepDoorOpenDuration, spriteRenderer.sprite == door_open);
+    }
+
+    private void createHuman()
+    {
+        spriteRenderer.sprite = door_open;
+        doCreateHuman = false;
+        InstantiateUtils.Instantiate(humanPrefab, getDoorPosition(), Quaternion.identity);
     }
 
     private Vector3 getDoorPosition()
