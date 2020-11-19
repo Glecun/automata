@@ -45,3 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelController: {fileID: 5372396990038599157, guid: 074534c01223afb41bd3543700387c35,
     type: 3}
+  UiInGameCanvas: {fileID: 1058214474987466185, guid: a4900fcc0a1d7ef4e8e1c9501ee176e1,
+    type: 3}

@@ -78,6 +78,6 @@ public class TownHall : MonoBehaviour
 
     public ResourceAmount getResource(ResourceEnum resourceEnum)
     {
-        return resourceStorage.get(resourceEnum);
+        return resourceStorage?.get(resourceEnum);
     }
 }

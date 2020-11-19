@@ -3,6 +3,7 @@
 public class GameSceneController : MonoBehaviour
 {
     [SerializeField] private GameObject levelController = null;
+    [SerializeField] private GameObject UiInGameCanvas = null;
 
     public GridScript grid;
 
@@ -12,5 +13,6 @@ public class GameSceneController : MonoBehaviour
 
         grid = new GridScript(settings.cellSize, settings.numberOfCellInLine, settings.numberOfCellInColumn);
         InstantiateUtils.Instantiate(levelController, transform);
+        InstantiateUtils.Instantiate(UiInGameCanvas, transform);
     }
 }
