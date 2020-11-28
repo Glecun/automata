@@ -46,6 +46,8 @@ MonoBehaviour:
   backgroundGrid: {fileID: 8585146516098951333, guid: 1bbeb973facae8e47ab7ff31929295f4,
     type: 3}
   tree: {fileID: 4616238796501717808, guid: 3387f43ded814a53b8a6049bd13e0a37, type: 3}
+  berryTree: {fileID: 9103314317160400650, guid: be74b7472477e5f44944cec0dccb1995,
+    type: 3}
   human: {fileID: 6310783016713924002, guid: fbb7d0287aaa84345829895738498763, type: 3}
   townHall: {fileID: 8151751804312085520, guid: d3a9e761ac3789041a88b77e7b89cb0c,
     type: 3}

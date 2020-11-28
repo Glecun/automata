@@ -6,12 +6,13 @@ public class HumanActionController : MonoBehaviour
 
     private HumanWaitingAction humanWaitingAction = null;
     private HumanGatherWoodAction humanGatherWoodAction = null;
+    private HumanGatherFoodAction humanGatherFoodAction = null;
     private HumanJustBornAction humanJustBornAction = null;
 
     private Countdown betweenEachDecisionMaking;
     private const float durationBetweenEachDecisionMaking = 1f;
 
-    private Decision currentDecision = Decision.NONE;
+    public Decision currentDecision = Decision.NONE;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class HumanActionController : MonoBehaviour
 
     private void updateDecision()
     {
-        doAction(humanDecisionController.getNewDecision());
+        doAction(humanDecisionController.getNewDecision(currentDecision));
     }
 
     public void doAction(Decision decision)
@@ -44,6 +45,9 @@ public class HumanActionController : MonoBehaviour
                 case Decision.GATHER_WOOD:
                     humanGatherWoodAction = gameObject.AddComponent<HumanGatherWoodAction>();
                     break;
+                case Decision.GATHER_FOOD:
+                    humanGatherFoodAction = gameObject.AddComponent<HumanGatherFoodAction>();
+                    break;
             }
 
             currentDecision = decision;
@@ -58,5 +62,7 @@ public class HumanActionController : MonoBehaviour
             humanGatherWoodAction.destroy();
         if (humanJustBornAction != null)
             Destroy(humanJustBornAction);
+        if (humanGatherFoodAction != null)
+            humanGatherFoodAction.destroy();
     }
 }

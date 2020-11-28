@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class HumanGatherWoodAction : MonoBehaviour
+public class HumanGatherFoodAction : MonoBehaviour
 {
     internal enum State
     {
@@ -14,7 +14,7 @@ public class HumanGatherWoodAction : MonoBehaviour
 
     private PathInProgress pathInProgress;
     private State state;
-    private TreeController currentlyCuttingTree;
+    private BerryTreeController currentlyCuttingBerryTree;
     private bool retry = true;
 
     private Countdown timeToGatherCountdown;
@@ -56,7 +56,7 @@ public class HumanGatherWoodAction : MonoBehaviour
             var townHallController = (TownHall) humanMovementController.getIfInRange(new GOTTownHall());
             if (townHallController != null)
             {
-                depositWoodInto(townHallController);
+                depositFoodInto(townHallController);
             }
             else
             {
@@ -73,14 +73,14 @@ public class HumanGatherWoodAction : MonoBehaviour
     {
         if (!pathInProgress.isMoving() && retry)
         {
-            var treeController = getNearestTreeMaybeCurrentlyCut();
-            if (treeController != null)
+            var berryTreeController = getNearestBerryTreeMaybeCurrentlyCut();
+            if (berryTreeController != null)
             {
-                cutTree(treeController);
+                cutBerryTree(berryTreeController);
             }
             else
             {
-                pathInProgress = humanMovementController.goToNearest(new GOTTree(TreeStateEnum.FULL, null));
+                pathInProgress = humanMovementController.goToNearest(new GOTBerryTree(TreeStateEnum.FULL, null));
                 if (!pathInProgress.isMoving())
                 {
                     waitBeforeRetry();
@@ -95,15 +95,14 @@ public class HumanGatherWoodAction : MonoBehaviour
         Utils.waitAndDo(() => retry = true, timeBeforeRetryCountdown, durationTimeBeforeRetry, true);
     }
 
-    private void depositWoodInto(TownHall townHallController)
+    private void depositFoodInto(TownHall townHallController)
     {
         void depositResource()
         {
             humanAnimationController.isDoing = false;
-            var resourceAmount = humanController.humanResourceController.resourceStorage.get(ResourceEnum.WOOD);
+            var resourceAmount = humanController.humanResourceController.resourceStorage.get(ResourceEnum.FOOD);
             townHallController.depositResource(resourceAmount);
-            humanController.humanResourceController.resourceStorage.set(
-                new ResourceAmount(0, ResourceEnum.WOOD));
+            humanController.humanResourceController.resourceStorage.set(new ResourceAmount(0, ResourceEnum.FOOD));
             InfoPopupController.Create(humanController.infoPopupPrefab,
                 humanMovementController.getTopPosition(0.2f), "-" + resourceAmount.amount);
         }
@@ -112,40 +111,40 @@ public class HumanGatherWoodAction : MonoBehaviour
         Utils.waitAndDo(depositResource, timeToDepositCountdown, durationTimeToDeposit, true);
     }
 
-    private void cutTree(TreeController treeController)
+    private void cutBerryTree(BerryTreeController berryTreeController)
     {
         void getResource()
         {
             humanAnimationController.isDoing = false;
-            treeController.setWhoIsCurrentlyCutting(null);
-            currentlyCuttingTree = null;
-            var resourceAmount = treeController.RetrieveResourceAmount();
+            berryTreeController.setWhoIsCurrentlyCutting(null);
+            currentlyCuttingBerryTree = null;
+            var resourceAmount = berryTreeController.RetrieveResourceAmount();
             humanController.humanResourceController.resourceStorage.set(resourceAmount);
             InfoPopupController.Create(humanController.infoPopupPrefab,
                 humanMovementController.getTopPosition(0.2f), "+" + resourceAmount.amount);
         }
 
         humanAnimationController.isDoing = true;
-        treeController.setWhoIsCurrentlyCutting(this);
-        currentlyCuttingTree = treeController;
+        berryTreeController.setWhoIsCurrentlyCutting(this);
+        currentlyCuttingBerryTree = berryTreeController;
         Utils.waitAndDo(getResource, timeToGatherCountdown, durationTimeToGather, true);
     }
 
-    private TreeController getNearestTreeMaybeCurrentlyCut()
+    private BerryTreeController getNearestBerryTreeMaybeCurrentlyCut()
     {
         if (humanAnimationController.isDoing)
         {
-            return (TreeController) humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
+            return (BerryTreeController) humanMovementController.getIfInRange(new GOTBerryTree(TreeStateEnum.FULL,
                 this));
         }
 
-        return (TreeController) humanMovementController.getIfInRange(new GOTTree(TreeStateEnum.FULL,
+        return (BerryTreeController) humanMovementController.getIfInRange(new GOTBerryTree(TreeStateEnum.FULL,
             null));
     }
 
     private State determineState()
     {
-        if (humanController.humanResourceController.resourceStorage.get(ResourceEnum.WOOD).amount >= 10)
+        if (humanController.humanResourceController.resourceStorage.get(ResourceEnum.FOOD).amount >= 10)
         {
             return State.RETURN_RESOURCE;
         }
@@ -158,8 +157,8 @@ public class HumanGatherWoodAction : MonoBehaviour
         Destroy(timeToDepositCountdown);
         Destroy(timeToGatherCountdown);
         humanAnimationController.resetAnimations();
-        if (currentlyCuttingTree != null)
-            currentlyCuttingTree.setWhoIsCurrentlyCutting(null);
+        if (currentlyCuttingBerryTree != null)
+            currentlyCuttingBerryTree.setWhoIsCurrentlyCutting(null);
         Destroy(this);
     }
 }

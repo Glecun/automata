@@ -4,6 +4,7 @@ public class LevelController : MonoBehaviour
 {
     [SerializeField] private GameObject backgroundGrid = null;
     [SerializeField] private GameObject tree = null;
+    [SerializeField] private GameObject berryTree = null;
     [SerializeField] private GameObject human = null;
     [SerializeField] private GameObject townHall = null;
 
@@ -16,6 +17,10 @@ public class LevelController : MonoBehaviour
         InstantiateUtils.Instantiate(tree, new Vector3(20, 4), Quaternion.identity, transform);
         InstantiateUtils.Instantiate(tree, new Vector3(20, 5), Quaternion.identity, transform);
         InstantiateUtils.Instantiate(tree, new Vector3(19, 4), Quaternion.identity, transform);
+
+
+        InstantiateUtils.Instantiate(berryTree, new Vector3(19, 0), Quaternion.identity, transform);
+        InstantiateUtils.Instantiate(berryTree, new Vector3(18, 1), Quaternion.identity, transform);
 
         //TownHall
         InstantiateUtils.Instantiate(townHall, new Vector3(8, 3), Quaternion.identity, transform);
