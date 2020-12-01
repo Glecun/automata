@@ -28,7 +28,12 @@ public class Utils
 
     public static int random(int min, int max)
     {
-        var random = new Random(System.DateTime.Now.Millisecond);
+        return random(min, max, DateTime.Now.Millisecond);
+    }
+
+    public static int random(int min, int max, int seed)
+    {
+        var random = new Random(seed);
         return random.Next(min, max + 1);
     }
 

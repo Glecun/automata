@@ -10,7 +10,7 @@ public class HumanWaitingAction : MonoBehaviour
     private PathInProgress pathInProgress;
 
     private Countdown waitBeforeNextStep;
-    private readonly Func<float> durationWaitBeforeNextStep = () => random(1, 3);
+    private readonly Func<float> durationWaitBeforeNextStep = () => random(2, 4);
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class HumanWaitingAction : MonoBehaviour
     {
         var end = new int2(
             humanMovementController.getPosition().x + random(-1, 1),
-            humanMovementController.getPosition().y + random(-1, 1)
+            humanMovementController.getPosition().y + random(-1, 1, DateTime.Now.Millisecond + 1)
         );
         pathInProgress = humanMovementController.goTo(end);
     }
